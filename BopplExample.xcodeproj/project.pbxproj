@@ -20,7 +20,9 @@
 		03FBA2FE19A4F8160014DE22 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FBA2DD19A4F8100014DE22 /* Foundation.framework */; };
 		03FBA2FF19A4F8160014DE22 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FBA2E119A4F8100014DE22 /* UIKit.framework */; };
 		03FBA30719A4F8160014DE22 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03FBA30519A4F8160014DE22 /* InfoPlist.strings */; };
-		03FBA30919A4F8160014DE22 /* BopplExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBA30819A4F8160014DE22 /* BopplExampleTests.m */; };
+		03FBA31519A4FDC70014DE22 /* BopplServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBA31419A4FDC70014DE22 /* BopplServer.m */; };
+		03FBA31919A513A00014DE22 /* BopplAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBA31819A513A00014DE22 /* BopplAccount.m */; };
+		03FBA31B19A521040014DE22 /* BopplAccountTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBA31A19A521040014DE22 /* BopplAccountTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +54,11 @@
 		03FBA2FC19A4F8160014DE22 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		03FBA30419A4F8160014DE22 /* BopplExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BopplExampleTests-Info.plist"; sourceTree = "<group>"; };
 		03FBA30619A4F8160014DE22 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		03FBA30819A4F8160014DE22 /* BopplExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BopplExampleTests.m; sourceTree = "<group>"; };
+		03FBA31319A4FDC70014DE22 /* BopplServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BopplServer.h; sourceTree = "<group>"; };
+		03FBA31419A4FDC70014DE22 /* BopplServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BopplServer.m; sourceTree = "<group>"; };
+		03FBA31719A5139F0014DE22 /* BopplAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BopplAccount.h; sourceTree = "<group>"; };
+		03FBA31819A513A00014DE22 /* BopplAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BopplAccount.m; sourceTree = "<group>"; };
+		03FBA31A19A521040014DE22 /* BopplAccountTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BopplAccountTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,8 +121,8 @@
 				03FBA2EC19A4F8110014DE22 /* AppDelegate.h */,
 				03FBA2ED19A4F8110014DE22 /* AppDelegate.m */,
 				03FBA2EF19A4F8110014DE22 /* Main.storyboard */,
-				03FBA2F219A4F8110014DE22 /* MainViewController.h */,
-				03FBA2F319A4F8110014DE22 /* MainViewController.m */,
+				03FBA31619A4FDD00014DE22 /* Model */,
+				03FBA31219A4FCE50014DE22 /* Controller */,
 				03FBA2F519A4F8120014DE22 /* Images.xcassets */,
 				03FBA2E419A4F8110014DE22 /* Supporting Files */,
 			);
@@ -137,7 +143,7 @@
 		03FBA30219A4F8160014DE22 /* BopplExampleTests */ = {
 			isa = PBXGroup;
 			children = (
-				03FBA30819A4F8160014DE22 /* BopplExampleTests.m */,
+				03FBA31A19A521040014DE22 /* BopplAccountTest.m */,
 				03FBA30319A4F8160014DE22 /* Supporting Files */,
 			);
 			path = BopplExampleTests;
@@ -150,6 +156,26 @@
 				03FBA30519A4F8160014DE22 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		03FBA31219A4FCE50014DE22 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				03FBA2F219A4F8110014DE22 /* MainViewController.h */,
+				03FBA2F319A4F8110014DE22 /* MainViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		03FBA31619A4FDD00014DE22 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				03FBA31719A5139F0014DE22 /* BopplAccount.h */,
+				03FBA31819A513A00014DE22 /* BopplAccount.m */,
+				03FBA31319A4FDC70014DE22 /* BopplServer.h */,
+				03FBA31419A4FDC70014DE22 /* BopplServer.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -249,9 +275,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03FBA31519A4FDC70014DE22 /* BopplServer.m in Sources */,
 				03FBA2F419A4F8110014DE22 /* MainViewController.m in Sources */,
 				03FBA2EE19A4F8110014DE22 /* AppDelegate.m in Sources */,
 				03FBA2EA19A4F8110014DE22 /* main.m in Sources */,
+				03FBA31919A513A00014DE22 /* BopplAccount.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,7 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03FBA30919A4F8160014DE22 /* BopplExampleTests.m in Sources */,
+				03FBA31B19A521040014DE22 /* BopplAccountTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
