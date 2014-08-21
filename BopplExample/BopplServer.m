@@ -54,23 +54,74 @@ static NSString *baseAPIURL = @"https://services-sandbox.boppl.me/api/v0.0.3";
 	return [NSURL URLWithString:[NSString stringWithFormat:@"%@/venues/%d/products/group/%d", baseAPIURL, venueID, groupID]];
 }
 
-#pragma mark Boppl Service calls
+#pragma mark Boppl Service utilities
 
-- (void)authenticateUsername:(NSString *)username withPassword:(NSString *)password
-{
-	// TODO: write
-}
+static NSString *HTTPHeaderFieldAuthorization = @"Authorization";
 
-- (void)getModifierCategoriesForVenue:(NSInteger)venueID
+- (void)callBopplServiceAtURL:(NSURL *)serviceURL completion:(void (^)(id, NSHTTPURLResponse *, NSError *))completion
 {
 	if (self.account == nil) {
 		NSLog(@"Cannot use API without specifing an account.");
+		completion(nil, nil, nil);
 		return;
 	}
 	
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:serviceURL];
+	[request setValue:[NSString stringWithFormat:@"Basic %@", [self.account encodedAuthorizationString]] forHTTPHeaderField:HTTPHeaderFieldAuthorization];
+	
+	[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+		NSLog(@"Received response from API Call.");
+		if (connectionError != nil) {
+			NSLog(@"Connection Error in service call: %@.", [connectionError localizedDescription]);
+			completion(nil, nil, connectionError);
+		} else {
+			if (response == nil || ![response isKindOfClass:[NSHTTPURLResponse class]]) {
+				NSLog(@"API URLResponse is nil or not an NSHTTPURLResponse.");
+				completion(nil, nil, nil);
+			} else {
+				NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
+				if ([HTTPResponse statusCode] != 200) {
+					NSLog(@"API response status code = %d.", [HTTPResponse statusCode]);
+					completion(nil, HTTPResponse, nil);
+				} else {
+					if (data == nil || data.length == 0) {
+						NSLog(@"Response data is nil or empty.");
+						completion(nil, HTTPResponse, nil);
+					} else {
+						NSError *JSONError;
+						id responseCollection = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&JSONError];
+						if (JSONError != nil) {
+							NSLog(@"Error in parsing JSON data of %d bytes. %@.", data.length, [JSONError localizedDescription]);
+							completion(nil, HTTPResponse, JSONError);
+						} else {
+							completion(responseCollection, HTTPResponse, nil);
+						}
+					}
+				}
+			}
+		}
+	}];
+}
+
+#pragma mark Boppl Service calls
+
+static NSUInteger defaultVenueID = 4;
+
+- (void)authenticateAccountWithCompletion:(void (^)(BOOL, NSHTTPURLResponse *, NSError *))completion
+{
+	NSURL *serviceURL = [[self class] getModifierCategoriesURLWithVenueID:defaultVenueID];
+	[self callBopplServiceAtURL:serviceURL completion:^(id JSONCollection, NSHTTPURLResponse *response, NSError *error) {
+		NSLog(@"Call to %s returned JSON object: %@.", __PRETTY_FUNCTION__, JSONCollection);
+		completion(JSONCollection != nil, response, error);
+	}];
+}
+
+- (void)getModifierCategoriesForVenue:(NSInteger)venueID completion:(void (^)(NSArray *, NSHTTPURLResponse *, NSError *))completion
+{
 	NSURL *serviceURL = [[self class] getModifierCategoriesURLWithVenueID:venueID];
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:serviceURL];]
-	// TODO: complete
+	[self callBopplServiceAtURL:serviceURL completion:^(id JSONCollection, NSHTTPURLResponse *response, NSError *error) {
+		NSLog(@"Call to %s returned JSON object: %@.", __PRETTY_FUNCTION__, JSONCollection);
+	}];
 }
 
 @end

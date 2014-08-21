@@ -23,6 +23,7 @@
 		03FBA31519A4FDC70014DE22 /* BopplServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBA31419A4FDC70014DE22 /* BopplServer.m */; };
 		03FBA31919A513A00014DE22 /* BopplAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBA31819A513A00014DE22 /* BopplAccount.m */; };
 		03FBA31B19A521040014DE22 /* BopplAccountTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBA31A19A521040014DE22 /* BopplAccountTest.m */; };
+		03FBA31D19A561260014DE22 /* BopplServerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FBA31C19A561260014DE22 /* BopplServerTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		03FBA31719A5139F0014DE22 /* BopplAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BopplAccount.h; sourceTree = "<group>"; };
 		03FBA31819A513A00014DE22 /* BopplAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BopplAccount.m; sourceTree = "<group>"; };
 		03FBA31A19A521040014DE22 /* BopplAccountTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BopplAccountTest.m; sourceTree = "<group>"; };
+		03FBA31C19A561260014DE22 /* BopplServerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BopplServerTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				03FBA31A19A521040014DE22 /* BopplAccountTest.m */,
+				03FBA31C19A561260014DE22 /* BopplServerTest.m */,
 				03FBA30319A4F8160014DE22 /* Supporting Files */,
 			);
 			path = BopplExampleTests;
@@ -287,6 +290,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03FBA31D19A561260014DE22 /* BopplServerTest.m in Sources */,
 				03FBA31B19A521040014DE22 /* BopplAccountTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

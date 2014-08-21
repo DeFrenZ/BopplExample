@@ -9,26 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "BopplAccount.h"
 
-@protocol BopplServerDelegate;
-
-#pragma mark -
-
 @interface BopplServer : NSObject
 
 @property (strong, nonatomic) BopplAccount *account;
-@property (weak, nonatomic) id<BopplServerDelegate> delegate;
 
-- (void)authenticateUsername:(NSString *)username withPassword:(NSString *)password;
-- (void)getModifierCategoriesForVenue:(NSInteger)venueID;
-
-@end
-
-#pragma mark -
-
-@protocol BopplServerDelegate <NSObject>
-
-@optional
-- (void)bopplServer:(BopplServer *)server didAuthenticate:(BOOL)authenticated;
-- (void)bopplServer:(BopplServer *)server didReceiveModifierCategories:(NSArray *)modifierCategories forVenueID:(NSInteger)venueID;
+- (void)authenticateAccountWithCompletion:(void (^)(BOOL authenticated, NSHTTPURLResponse *response, NSError *error))completion;
+- (void)getModifierCategoriesForVenue:(NSInteger)venueID completion:(void (^)(NSArray *modifierCategories, NSHTTPURLResponse *response, NSError *error))completion;
 
 @end
