@@ -127,6 +127,13 @@ static NSUInteger defaultVenueID = 4;
 	NSURL *serviceURL = [[self class] getModifierCategoriesURLWithVenueID:venueID];
 	[self callBopplServiceAtURL:serviceURL completion:^(id JSONCollection, NSHTTPURLResponse *response, NSError *error) {
 		NSLog(@"Call to %s returned JSON object: %@.", __PRETTY_FUNCTION__, JSONCollection);
+#warning TODO: convert collection objects to custom class
+		if (![JSONCollection isKindOfClass:[NSArray class]]) {
+			NSLog(@"The returned JSON object is inconsistent with the API call.");
+			completion(nil, response, error);
+		} else {
+			completion((NSArray *)JSONCollection, response, error);
+		}
 	}];
 }
 

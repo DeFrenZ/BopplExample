@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Main View Controller-->
+        <!--Main View Controller - BopplExample-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="MainViewController" sceneMemberID="viewController">
@@ -15,16 +15,77 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vDJ-Gf-fzw">
+                                <rect key="frame" x="60" y="150" width="200" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Call API">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="callAPIButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="pRC-SM-bY8"/>
+                                </connections>
+                            </button>
+                            <pickerView contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cyj-hu-pRy">
+                                <rect key="frame" x="0.0" y="406" width="320" height="162"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="vXZ-lx-hvc" id="Ziw-6P-Gps"/>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="qz6-pe-Mz3"/>
+                                </connections>
+                            </pickerView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Cyj-hu-pRy" secondAttribute="bottom" id="Aha-7G-4x3"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="cC8-zg-vA3"/>
+                    <navigationItem key="navigationItem" title="BopplExample" id="cC8-zg-vA3"/>
                     <connections>
+                        <outlet property="APICallsNamesPickerView" destination="Cyj-hu-pRy" id="biY-8Q-thY"/>
                         <segue destination="Vbv-r6-YGI" kind="modal" identifier="LoginSegue" id="Xet-0j-0f0"/>
+                        <segue destination="gYC-a0-Pi8" kind="push" identifier="ResultSegue" id="ELO-Xp-unF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="606" y="25"/>
+        </scene>
+        <!--Result View Controller - Result-->
+        <scene sceneID="Ud2-wM-gpT">
+            <objects>
+                <viewController id="gYC-a0-Pi8" customClass="ResultViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QuN-Fg-HLB"/>
+                        <viewControllerLayoutGuide type="bottom" id="TF1-2h-NNa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dia-eM-Lyl">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JUo-dP-5iV">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="JUo-dP-5iV" firstAttribute="top" secondItem="QuN-Fg-HLB" secondAttribute="bottom" id="sYj-a2-iPa"/>
+                            <constraint firstItem="TF1-2h-NNa" firstAttribute="top" secondItem="JUo-dP-5iV" secondAttribute="bottom" id="wzw-PQ-l7W"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Result" id="efZ-fx-MoY"/>
+                    <connections>
+                        <outlet property="resultTextView" destination="JUo-dP-5iV" id="JV9-Hk-tbm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kcF-y2-824" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1127" y="25"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tsX-ta-4Gg">

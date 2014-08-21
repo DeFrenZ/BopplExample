@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "LoginViewController.h"
 
-@interface MainViewController : UIViewController <UIAlertViewDelegate, LoginViewControllerDelegate>
+@interface MainViewController : UIViewController <UIAlertViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource, LoginViewControllerDelegate>
 
 @end
