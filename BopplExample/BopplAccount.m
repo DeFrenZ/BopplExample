@@ -186,7 +186,7 @@ var = value; \
 
 - (NSUInteger)hash
 {
-#warning can be improved with bit rotation
+#warning IMPROVE: can be improved with bit rotation
 	return [self.username hash] ^ [self.password hash];
 }
 

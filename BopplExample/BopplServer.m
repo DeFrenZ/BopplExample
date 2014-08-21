@@ -150,7 +150,7 @@ static NSUInteger defaultVenueID = 4;
 		return;
 	}
 	
-#warning make check work for any venueID
+#warning IMPROVE: make check work for any venueID
 	NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:serviceURL statusCode:200 HTTPVersion:@"HTTP/1.1" headerFields:nil];
 	id JSONCollection;
 	if ([serviceURL isEqual:[[self class] getModifierCategoriesURLWithVenueID:defaultVenueID]]) {

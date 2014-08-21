@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0302D22C19A6452E006BA95C /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0302D22B19A6452E006BA95C /* LoginViewController.m */; };
 		03FBA2DE19A4F8100014DE22 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FBA2DD19A4F8100014DE22 /* Foundation.framework */; };
 		03FBA2E019A4F8100014DE22 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FBA2DF19A4F8100014DE22 /* CoreGraphics.framework */; };
 		03FBA2E219A4F8100014DE22 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FBA2E119A4F8100014DE22 /* UIKit.framework */; };
@@ -37,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0302D22A19A6452E006BA95C /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		0302D22B19A6452E006BA95C /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		03FBA2DA19A4F80F0014DE22 /* BopplExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BopplExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FBA2DD19A4F8100014DE22 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		03FBA2DF19A4F8100014DE22 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -166,6 +169,8 @@
 			children = (
 				03FBA2F219A4F8110014DE22 /* MainViewController.h */,
 				03FBA2F319A4F8110014DE22 /* MainViewController.m */,
+				0302D22A19A6452E006BA95C /* LoginViewController.h */,
+				0302D22B19A6452E006BA95C /* LoginViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -280,6 +285,7 @@
 			files = (
 				03FBA31519A4FDC70014DE22 /* BopplServer.m in Sources */,
 				03FBA2F419A4F8110014DE22 /* MainViewController.m in Sources */,
+				0302D22C19A6452E006BA95C /* LoginViewController.m in Sources */,
 				03FBA2EE19A4F8110014DE22 /* AppDelegate.m in Sources */,
 				03FBA2EA19A4F8110014DE22 /* main.m in Sources */,
 				03FBA31919A513A00014DE22 /* BopplAccount.m in Sources */,
@@ -488,6 +494,7 @@
 				03FBA30E19A4F8160014DE22 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		03FBA30F19A4F8160014DE22 /* Build configuration list for PBXNativeTarget "BopplExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -496,6 +503,7 @@
 				03FBA31119A4F8160014DE22 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

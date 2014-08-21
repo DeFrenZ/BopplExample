@@ -22,6 +22,6 @@
 
 - (BOOL)isEqualToAccount:(BopplAccount *)account;
 
-#warning add KeyChain support
+#warning TODO: add KeyChain support
 
 @end
