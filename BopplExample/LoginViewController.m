@@ -83,6 +83,7 @@
 	self.server.account = [BopplAccount accountWithUsername:self.usernameTextField.text andPassword:self.passwordTextField.text];
 	[self.server authenticateAccountWithCompletion:^(BOOL authenticated, NSHTTPURLResponse *response, NSError *error) {
 		dispatch_async(dispatch_get_main_queue(), ^{
+#warning TODO: has to treat NSURLErrorDomain 1012 as invalid credentials
 			if (error != nil) {
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
