@@ -30,7 +30,7 @@
     [super setUp];
 	self.exampleAccount = [BopplAccount accountWithUsername:@"defrenz@gmail.com" andPassword:@"password123"];
 	self.exampleInvalidAccount = [BopplAccount accountWithUsername:@"test@example.com" andPassword:@"password"];
-	self.exampleServer = [BopplServer new];
+	self.exampleServer = [BopplFakeServer new];
 	self.exampleServer.account = self.exampleAccount;
 }
 
@@ -40,16 +40,10 @@
 {
 	dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
 	
-	[NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://services-sandbox.boppl.me/api/v0.0.3/venues/4/categories/modifier"]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-		NSLog(@"Asynchronous request returned.");
-	}];
-	
-	/*
 	[self.exampleServer authenticateAccountWithCompletion:^(BOOL authenticated, NSHTTPURLResponse *response, NSError *error) {
 		XCTAssertTrue(authenticated, @"Should have authenticated succesfully with a valid account.");
 		dispatch_semaphore_signal(semaphore);
 	}];
-	*/
 	
 	if (dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, TEST_TIMEOUT_TIME_NS))) {
 		XCTFail(@"Asynchronous test %s did not finish within the timeout of %f seconds.", __PRETTY_FUNCTION__, TEST_TIMEOUT_TIME_S);
@@ -59,7 +53,7 @@
 - (void)testAuthenticationWithInvalidAccount
 {
 	dispatch_group_t semaphores = dispatch_group_create();
-	BopplServer *testServer = [BopplServer new];
+	BopplServer *testServer = [BopplFakeServer new];
 	
 	dispatch_group_enter(semaphores);
 	[testServer authenticateAccountWithCompletion:^(BOOL authenticated, NSHTTPURLResponse *response, NSError *error) {

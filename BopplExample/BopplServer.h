@@ -17,3 +17,9 @@
 - (void)getModifierCategoriesForVenue:(NSInteger)venueID completion:(void (^)(NSArray *modifierCategories, NSHTTPURLResponse *response, NSError *error))completion;
 
 @end
+
+#pragma mark -
+
+@interface BopplFakeServer : BopplServer
+
+@end

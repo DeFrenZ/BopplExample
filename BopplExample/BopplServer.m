@@ -8,6 +8,12 @@
 
 #import "BopplServer.h"
 
+@interface BopplServer ()
+
+- (void)callBopplServiceAtURL:(NSURL *)serviceURL completion:(void (^)(id JSONCollection, NSHTTPURLResponse *response, NSError *error))completion;
+
+@end
+
 @implementation BopplServer
 
 #pragma mark Boppl Service URLs
@@ -122,6 +128,50 @@ static NSUInteger defaultVenueID = 4;
 	[self callBopplServiceAtURL:serviceURL completion:^(id JSONCollection, NSHTTPURLResponse *response, NSError *error) {
 		NSLog(@"Call to %s returned JSON object: %@.", __PRETTY_FUNCTION__, JSONCollection);
 	}];
+}
+
+@end
+
+#pragma mark -
+
+@implementation BopplFakeServer
+
+- (void)callBopplServiceAtURL:(NSURL *)serviceURL completion:(void (^)(id, NSHTTPURLResponse *, NSError *))completion
+{
+	if (self.account == nil) {
+		NSLog(@"Cannot use API without specifing an account.");
+		completion(nil, nil, nil);
+		return;
+	}
+	
+	if (![self.account isEqualToAccount:[BopplAccount accountWithUsername:@"defrenz@gmail.com" andPassword:@"password123"]]) {
+		NSLog(@"Cannot use API on Fake Server with an account different from defrenz@gmail.com:password123");
+		completion(nil, [[NSHTTPURLResponse alloc] initWithURL:serviceURL statusCode:401 HTTPVersion:@"HTTP/1.1" headerFields:nil], nil);
+		return;
+	}
+	
+#warning make check work for any venueID
+	NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:serviceURL statusCode:200 HTTPVersion:@"HTTP/1.1" headerFields:nil];
+	id JSONCollection;
+	if ([serviceURL isEqual:[[self class] getModifierCategoriesURLWithVenueID:defaultVenueID]]) {
+		JSONCollection = @[@{@"id": @1,
+							 @"category_desc": @"Sizes",
+							 @"override_price": @YES,
+							 @"mandatory_select": @YES,
+							 @"multi_select": @NO,
+							 @"sort_order": @0,
+							 @"active": @YES,
+							 @"product_modifiers": @[]},
+						   @{@"id": @2,
+							 @"category_desc": @"Mixers",
+							 @"override_price": @NO,
+							 @"mandatory_select": @YES,
+							 @"multi_select": @NO,
+							 @"sort_order": @1,
+							 @"active": @YES,
+							 @"product_modifiers": @[]}];
+	}
+	completion(JSONCollection, response, nil);
 }
 
 @end
