@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		0302D22C19A6452E006BA95C /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0302D22B19A6452E006BA95C /* LoginViewController.m */; };
 		033AFC0919A675DC00212011 /* ResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 033AFC0819A675DC00212011 /* ResultViewController.m */; };
+		033AFC0C19A8185800212011 /* BopplProductModifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 033AFC0B19A8185800212011 /* BopplProductModifier.m */; };
+		033AFC0F19A8187800212011 /* BopplProductModifierCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 033AFC0E19A8187800212011 /* BopplProductModifierCategory.m */; };
+		033AFC1219A818B300212011 /* BopplProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 033AFC1119A818B300212011 /* BopplProduct.m */; };
+		033AFC1519A818C400212011 /* BopplProductCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 033AFC1419A818C400212011 /* BopplProductCategory.m */; };
+		033AFC1819A818D100212011 /* BopplProductGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 033AFC1719A818D100212011 /* BopplProductGroup.m */; };
 		03FBA2DE19A4F8100014DE22 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FBA2DD19A4F8100014DE22 /* Foundation.framework */; };
 		03FBA2E019A4F8100014DE22 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FBA2DF19A4F8100014DE22 /* CoreGraphics.framework */; };
 		03FBA2E219A4F8100014DE22 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FBA2E119A4F8100014DE22 /* UIKit.framework */; };
@@ -43,6 +48,17 @@
 		0302D22B19A6452E006BA95C /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		033AFC0719A675DB00212011 /* ResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultViewController.h; sourceTree = "<group>"; };
 		033AFC0819A675DC00212011 /* ResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultViewController.m; sourceTree = "<group>"; };
+		033AFC0A19A8185800212011 /* BopplProductModifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BopplProductModifier.h; sourceTree = "<group>"; };
+		033AFC0B19A8185800212011 /* BopplProductModifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BopplProductModifier.m; sourceTree = "<group>"; };
+		033AFC0D19A8187800212011 /* BopplProductModifierCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BopplProductModifierCategory.h; sourceTree = "<group>"; };
+		033AFC0E19A8187800212011 /* BopplProductModifierCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BopplProductModifierCategory.m; sourceTree = "<group>"; };
+		033AFC1019A818B300212011 /* BopplProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BopplProduct.h; sourceTree = "<group>"; };
+		033AFC1119A818B300212011 /* BopplProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BopplProduct.m; sourceTree = "<group>"; };
+		033AFC1319A818C400212011 /* BopplProductCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BopplProductCategory.h; sourceTree = "<group>"; };
+		033AFC1419A818C400212011 /* BopplProductCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BopplProductCategory.m; sourceTree = "<group>"; };
+		033AFC1619A818D100212011 /* BopplProductGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BopplProductGroup.h; sourceTree = "<group>"; };
+		033AFC1719A818D100212011 /* BopplProductGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BopplProductGroup.m; sourceTree = "<group>"; };
+		033AFC1919A81A2900212011 /* init_macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = init_macros.h; sourceTree = "<group>"; };
 		03FBA2DA19A4F80F0014DE22 /* BopplExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BopplExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FBA2DD19A4F8100014DE22 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		03FBA2DF19A4F8100014DE22 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -144,6 +160,7 @@
 				03FBA2E619A4F8110014DE22 /* InfoPlist.strings */,
 				03FBA2E919A4F8110014DE22 /* main.m */,
 				03FBA2EB19A4F8110014DE22 /* BopplExample-Prefix.pch */,
+				033AFC1919A81A2900212011 /* init_macros.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -187,6 +204,16 @@
 				03FBA31819A513A00014DE22 /* BopplAccount.m */,
 				03FBA31319A4FDC70014DE22 /* BopplServer.h */,
 				03FBA31419A4FDC70014DE22 /* BopplServer.m */,
+				033AFC1619A818D100212011 /* BopplProductGroup.h */,
+				033AFC1719A818D100212011 /* BopplProductGroup.m */,
+				033AFC1319A818C400212011 /* BopplProductCategory.h */,
+				033AFC1419A818C400212011 /* BopplProductCategory.m */,
+				033AFC0A19A8185800212011 /* BopplProductModifier.h */,
+				033AFC0B19A8185800212011 /* BopplProductModifier.m */,
+				033AFC0D19A8187800212011 /* BopplProductModifierCategory.h */,
+				033AFC0E19A8187800212011 /* BopplProductModifierCategory.m */,
+				033AFC1019A818B300212011 /* BopplProduct.h */,
+				033AFC1119A818B300212011 /* BopplProduct.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -288,12 +315,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				033AFC1519A818C400212011 /* BopplProductCategory.m in Sources */,
 				03FBA31519A4FDC70014DE22 /* BopplServer.m in Sources */,
 				033AFC0919A675DC00212011 /* ResultViewController.m in Sources */,
 				03FBA2F419A4F8110014DE22 /* MainViewController.m in Sources */,
+				033AFC0F19A8187800212011 /* BopplProductModifierCategory.m in Sources */,
 				0302D22C19A6452E006BA95C /* LoginViewController.m in Sources */,
+				033AFC1219A818B300212011 /* BopplProduct.m in Sources */,
 				03FBA2EE19A4F8110014DE22 /* AppDelegate.m in Sources */,
 				03FBA2EA19A4F8110014DE22 /* main.m in Sources */,
+				033AFC1819A818D100212011 /* BopplProductGroup.m in Sources */,
+				033AFC0C19A8185800212011 /* BopplProductModifier.m in Sources */,
 				03FBA31919A513A00014DE22 /* BopplAccount.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
