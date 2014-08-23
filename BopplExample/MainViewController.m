@@ -167,6 +167,10 @@ static NSString *loginViewControllerSegueIdentifier = @"LoginSegue";
 
 - (IBAction)callAPIButtonPressed:(id)sender
 {
+	for (UITextField *textField in self.allTextFields) {
+		[textField resignFirstResponder];
+	}
+	
 	NSString *selectedAPICallName = self.APICallsNames[[self.APICallsNamesPickerView selectedRowInComponent:0]];
 	[self.server callAPIWithCallName:selectedAPICallName withVenueID:[self selectedVenueID] otherID:[self selectedOtherID] completion:^(NSArray *result, NSHTTPURLResponse *response, NSError *error) {
 		dispatch_async(dispatch_get_main_queue(), ^{
@@ -185,6 +189,15 @@ static NSString *loginViewControllerSegueIdentifier = @"LoginSegue";
 - (IBAction)textFieldHasEditedText:(id)sender
 {
 	[self checkCallAPIButtonEnabling];
+}
+
+- (IBAction)handleTap:(UITapGestureRecognizer *)sender
+{
+	if (sender.state == UIGestureRecognizerStateEnded) {
+		for (UITextField *textField in self.allTextFields) {
+			[textField resignFirstResponder];
+		}
+	}
 }
 
 #pragma mark MainViewController

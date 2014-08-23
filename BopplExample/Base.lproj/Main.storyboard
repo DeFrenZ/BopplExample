@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vDJ-Gf-fzw">
-                                <rect key="frame" x="60" y="250" width="200" height="40"/>
+                                <rect key="frame" x="60" y="210" width="200" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Call API">
@@ -137,11 +137,15 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Cyj-hu-pRy" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="1Ou-Bg-HGK"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Cyj-hu-pRy" secondAttribute="bottom" id="Aha-7G-4x3"/>
                             <constraint firstAttribute="centerX" secondItem="Cyj-hu-pRy" secondAttribute="centerX" id="ZG1-45-VLF"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="tEP-FU-zzB" appends="YES" id="i8r-k7-wN6"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="BopplExample" id="cC8-zg-vA3"/>
                     <connections>
@@ -169,6 +173,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="tEP-FU-zzB">
+                    <connections>
+                        <action selector="handleTap:" destination="vXZ-lx-hvc" id="iMb-bE-EV0"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="606" y="25"/>
         </scene>
