@@ -10,7 +10,7 @@
 
 @interface BopplServer ()
 
-- (void)callBopplServiceAtURL:(NSURL *)serviceURL completion:(void (^)(id JSONCollection, NSHTTPURLResponse *response, NSError *error))completion;
+- (void)callBopplServiceAtURL:(NSURL *)serviceURL completion:(void (^)(NSArray *JSONCollection, NSHTTPURLResponse *response, NSError *error))completion;
 
 @end
 
@@ -124,7 +124,7 @@ static NSUInteger defaultVenueID = 4;
 
 - (void)authenticateAccountWithCompletion:(void (^)(BOOL, NSHTTPURLResponse *, NSError *))completion
 {
-	NSURL *serviceURL = [[self class] getModifierCategoriesURLWithVenueID:defaultVenueID];
+	NSURL *serviceURL = [[self class] getProductURLWithVenueID:0 andProductID:0];
 	[self callBopplServiceAtURL:serviceURL completion:^(NSArray *JSONCollection, NSHTTPURLResponse *response, NSError *error) {
 		completion(JSONCollection != nil, response, error);
 	}];
@@ -213,7 +213,7 @@ static NSUInteger defaultVenueID = 4;
 
 @implementation BopplFakeServer
 
-- (void)callBopplServiceAtURL:(NSURL *)serviceURL completion:(void (^)(id, NSHTTPURLResponse *, NSError *))completion
+- (void)callBopplServiceAtURL:(NSURL *)serviceURL completion:(void (^)(NSArray *, NSHTTPURLResponse *, NSError *))completion
 {
 	if (self.account == nil) {
 		NSLog(@"Cannot use API without specifing an account.");
