@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0302D22C19A6452E006BA95C /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0302D22B19A6452E006BA95C /* LoginViewController.m */; };
-		033AFC0919A675DC00212011 /* ResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 033AFC0819A675DC00212011 /* ResultViewController.m */; };
+		033AFC0919A675DC00212011 /* ProductListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 033AFC0819A675DC00212011 /* ProductListViewController.m */; };
 		033AFC0C19A8185800212011 /* BopplProductModifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 033AFC0B19A8185800212011 /* BopplProductModifier.m */; };
 		033AFC0F19A8187800212011 /* BopplProductModifierCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 033AFC0E19A8187800212011 /* BopplProductModifierCategory.m */; };
 		033AFC1219A818B300212011 /* BopplProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 033AFC1119A818B300212011 /* BopplProduct.m */; };
@@ -48,8 +48,8 @@
 /* Begin PBXFileReference section */
 		0302D22A19A6452E006BA95C /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		0302D22B19A6452E006BA95C /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		033AFC0719A675DB00212011 /* ResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultViewController.h; sourceTree = "<group>"; };
-		033AFC0819A675DC00212011 /* ResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultViewController.m; sourceTree = "<group>"; };
+		033AFC0719A675DB00212011 /* ProductListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductListViewController.h; sourceTree = "<group>"; };
+		033AFC0819A675DC00212011 /* ProductListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductListViewController.m; sourceTree = "<group>"; };
 		033AFC0A19A8185800212011 /* BopplProductModifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BopplProductModifier.h; sourceTree = "<group>"; };
 		033AFC0B19A8185800212011 /* BopplProductModifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BopplProductModifier.m; sourceTree = "<group>"; };
 		033AFC0D19A8187800212011 /* BopplProductModifierCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BopplProductModifierCategory.h; sourceTree = "<group>"; };
@@ -115,6 +115,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		033AFC2019A8C93F00212011 /* JSON Objects */ = {
+			isa = PBXGroup;
+			children = (
+				033AFC1F19A8C6C700212011 /* BopplJSONObjects.h */,
+				033AFC1619A818D100212011 /* BopplProductGroup.h */,
+				033AFC1719A818D100212011 /* BopplProductGroup.m */,
+				033AFC1319A818C400212011 /* BopplProductCategory.h */,
+				033AFC1419A818C400212011 /* BopplProductCategory.m */,
+				033AFC0A19A8185800212011 /* BopplProductModifier.h */,
+				033AFC0B19A8185800212011 /* BopplProductModifier.m */,
+				033AFC0D19A8187800212011 /* BopplProductModifierCategory.h */,
+				033AFC0E19A8187800212011 /* BopplProductModifierCategory.m */,
+				033AFC1019A818B300212011 /* BopplProduct.h */,
+				033AFC1119A818B300212011 /* BopplProduct.m */,
+			);
+			name = "JSON Objects";
+			sourceTree = "<group>";
+		};
+		033AFC2119A8CC1800212011 /* Web Service Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				03FBA31719A5139F0014DE22 /* BasicHTTPAuthAccount.h */,
+				03FBA31819A513A00014DE22 /* BasicHTTPAuthAccount.m */,
+				033AFC1A19A8AB0300212011 /* WebImageDownloader.h */,
+				033AFC1B19A8AB0300212011 /* WebImageDownloader.m */,
+			);
+			name = "Web Service Utilities";
+			sourceTree = "<group>";
+		};
+		033AFC2219A8E5DF00212011 /* Web Service Utilities Tests */ = {
+			isa = PBXGroup;
+			children = (
+				03FBA31A19A521040014DE22 /* BasicHTTPAuthAccountTest.m */,
+				033AFC1D19A8AB1F00212011 /* WebImageDownloaderTest.m */,
+			);
+			name = "Web Service Utilities Tests";
+			sourceTree = "<group>";
+		};
 		03FBA2D119A4F80D0014DE22 = {
 			isa = PBXGroup;
 			children = (
@@ -174,9 +212,8 @@
 		03FBA30219A4F8160014DE22 /* BopplExampleTests */ = {
 			isa = PBXGroup;
 			children = (
-				03FBA31A19A521040014DE22 /* BasicHTTPAuthAccountTest.m */,
+				033AFC2219A8E5DF00212011 /* Web Service Utilities Tests */,
 				03FBA31C19A561260014DE22 /* BopplServerTest.m */,
-				033AFC1D19A8AB1F00212011 /* WebImageDownloaderTest.m */,
 				03FBA30319A4F8160014DE22 /* Supporting Files */,
 			);
 			path = BopplExampleTests;
@@ -198,8 +235,8 @@
 				03FBA2F319A4F8110014DE22 /* MainViewController.m */,
 				0302D22A19A6452E006BA95C /* LoginViewController.h */,
 				0302D22B19A6452E006BA95C /* LoginViewController.m */,
-				033AFC0719A675DB00212011 /* ResultViewController.h */,
-				033AFC0819A675DC00212011 /* ResultViewController.m */,
+				033AFC0719A675DB00212011 /* ProductListViewController.h */,
+				033AFC0819A675DC00212011 /* ProductListViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -207,23 +244,10 @@
 		03FBA31619A4FDD00014DE22 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				03FBA31719A5139F0014DE22 /* BasicHTTPAuthAccount.h */,
-				03FBA31819A513A00014DE22 /* BasicHTTPAuthAccount.m */,
+				033AFC2119A8CC1800212011 /* Web Service Utilities */,
+				033AFC2019A8C93F00212011 /* JSON Objects */,
 				03FBA31319A4FDC70014DE22 /* BopplServer.h */,
 				03FBA31419A4FDC70014DE22 /* BopplServer.m */,
-				033AFC1F19A8C6C700212011 /* BopplJSONObjects.h */,
-				033AFC1619A818D100212011 /* BopplProductGroup.h */,
-				033AFC1719A818D100212011 /* BopplProductGroup.m */,
-				033AFC1319A818C400212011 /* BopplProductCategory.h */,
-				033AFC1419A818C400212011 /* BopplProductCategory.m */,
-				033AFC0A19A8185800212011 /* BopplProductModifier.h */,
-				033AFC0B19A8185800212011 /* BopplProductModifier.m */,
-				033AFC0D19A8187800212011 /* BopplProductModifierCategory.h */,
-				033AFC0E19A8187800212011 /* BopplProductModifierCategory.m */,
-				033AFC1019A818B300212011 /* BopplProduct.h */,
-				033AFC1119A818B300212011 /* BopplProduct.m */,
-				033AFC1A19A8AB0300212011 /* WebImageDownloader.h */,
-				033AFC1B19A8AB0300212011 /* WebImageDownloader.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -328,7 +352,7 @@
 				033AFC1519A818C400212011 /* BopplProductCategory.m in Sources */,
 				03FBA31519A4FDC70014DE22 /* BopplServer.m in Sources */,
 				033AFC1C19A8AB0300212011 /* WebImageDownloader.m in Sources */,
-				033AFC0919A675DC00212011 /* ResultViewController.m in Sources */,
+				033AFC0919A675DC00212011 /* ProductListViewController.m in Sources */,
 				03FBA2F419A4F8110014DE22 /* MainViewController.m in Sources */,
 				033AFC0F19A8187800212011 /* BopplProductModifierCategory.m in Sources */,
 				0302D22C19A6452E006BA95C /* LoginViewController.m in Sources */,

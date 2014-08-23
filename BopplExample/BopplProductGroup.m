@@ -49,4 +49,20 @@
 	return [[self alloc] initWithDictionary:dictionary];
 }
 
+#pragma mark BopplProductGroup
+
++ (NSDictionary *)dictionaryFromProductGroups:(NSArray *)groups
+{
+	if (groups != nil) {
+		NSMutableDictionary *tempDictionary = [NSMutableDictionary dictionaryWithCapacity:groups.count];
+		for (BopplProductGroup *currentGroup in groups) {
+			tempDictionary[@(currentGroup.identifier)] = currentGroup;
+		}
+		return [NSDictionary dictionaryWithDictionary:tempDictionary];
+	}
+	
+	NSLog(@"Trying to index a nil NSArray.");
+	return nil;
+}
+
 @end

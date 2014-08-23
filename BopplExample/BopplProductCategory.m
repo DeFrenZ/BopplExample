@@ -60,4 +60,48 @@
 	return [[self alloc] initWithDictionary:dictionary];
 }
 
+#pragma mark BopplProductCategories
+
++ (NSDictionary *)dictionaryFromProductCategories:(NSArray *)categories
+{
+	if (categories != nil) {
+		NSMutableDictionary *tempDictionary = [NSMutableDictionary dictionaryWithCapacity:categories.count];
+		for (BopplProductCategory *currentCategory in categories) {
+			tempDictionary[@(currentCategory.identifier)] = currentCategory;
+		}
+		return [NSDictionary dictionaryWithDictionary:tempDictionary];
+	}
+	
+	NSLog(@"Trying to index a nil NSArray.");
+	return nil;
+}
+
++ (void)linkCategories:(NSArray *)categories toGroups:(NSArray *)groups
+{
+	if (categories != nil && groups != nil) {
+		NSDictionary *indexedGroups = [BopplProductGroup dictionaryFromProductGroups:groups];
+		for (BopplProductCategory *currentCategory in categories) {
+			currentCategory.productGroup = indexedGroups[@(currentCategory.productGroupIdentifier)];
+		}
+	}
+	
+	NSLog(@"Trying to link arrays in %s but at least one is nil.", __PRETTY_FUNCTION__);
+}
+
++ (NSDictionary *)filterCategories:(NSArray *)categories byGroup:(NSArray *)groups
+{
+	if (categories != nil && groups != nil) {
+		NSMutableDictionary *tempDictionary = [NSMutableDictionary dictionaryWithCapacity:groups.count];
+		NSArray *categoriesWithinCurrentGroup;
+		for (BopplProductGroup *currentGroup in groups) {
+			categoriesWithinCurrentGroup = [groups filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productGroupIdentifier == %d", currentGroup.identifier]];
+			tempDictionary[@(currentGroup.identifier)] = categoriesWithinCurrentGroup;
+		}
+		return [NSDictionary dictionaryWithDictionary:tempDictionary];
+	}
+	
+	NSLog(@"Trying to filter categories by group without supplying categories or groups.");
+	return nil;
+}
+
 @end

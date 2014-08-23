@@ -6,9 +6,7 @@
 //  Copyright (c) 2014 Davide De Franceschi. All rights reserved.
 //
 
-#import "BopplProduct.h"
-#import "BopplProductCategory.h"
-#import "BopplProductModifierCategory.h"
+#import "BopplJSONObjects.h"
 #import "init_macros.h"
 
 @implementation BopplProduct
@@ -73,6 +71,76 @@
 }
 
 #pragma mark BopplProduct
+
++ (NSDictionary *)dictionaryFromProducts:(NSArray *)products
+{
+	if (products != nil) {
+		NSMutableDictionary *tempDictionary = [NSMutableDictionary dictionaryWithCapacity:products.count];
+		for (BopplProduct *currentProduct in products) {
+			tempDictionary[@(currentProduct.productIdentifier)] = currentProduct;
+		}
+		return [NSDictionary dictionaryWithDictionary:tempDictionary];
+	}
+	
+	NSLog(@"Trying to index a nil NSArray.");
+	return nil;
+}
+
++ (void)linkProducts:(NSArray *)products toCategories:(NSArray *)categories
+{
+	if (products != nil && categories != nil) {
+		NSDictionary *indexedCategories = [BopplProductCategory dictionaryFromProductCategories:categories];
+		for (BopplProduct *currentProduct in products) {
+			currentProduct.productCategory = indexedCategories[@(currentProduct.productCategoryIdentifier)];
+		}
+	}
+	
+	NSLog(@"Trying to link arrays in %s but at least one is nil.", __PRETTY_FUNCTION__);
+}
+
++ (void)linkProducts:(NSArray *)products toGroups:(NSArray *)groups withCategories:(NSArray *)categories
+{
+	if (products != nil && groups != nil && categories != nil) {
+		[BopplProductCategory linkCategories:categories toGroups:groups];
+		[[self class] linkProducts:products toCategories:categories];
+	}
+	
+	NSLog(@"Trying to link arrays in %s but at least one is nil.", __PRETTY_FUNCTION__);
+}
+
++ (NSDictionary *)filterProducts:(NSArray *)products byCategories:(NSArray *)categories
+{
+	if (products != nil && categories != nil) {
+		NSMutableDictionary *tempDictionary = [NSMutableDictionary dictionaryWithCapacity:categories.count];
+		NSArray *productsWithinCurrentCategory;
+		for (BopplProductCategory *currentCategory in categories) {
+			productsWithinCurrentCategory = [products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productCategoryIdentifier == %d", currentCategory.identifier]];
+			tempDictionary[@(currentCategory.identifier)] = productsWithinCurrentCategory;
+		}
+		return [NSDictionary dictionaryWithDictionary:tempDictionary];
+	}
+	
+	NSLog(@"Trying to filter products by category without supplying products or categories.");
+	return nil;
+}
+
++ (NSDictionary *)filterProducts:(NSArray *)products byGroups:(NSArray *)groups withCategories:(NSArray *)categories
+{
+	if (products != nil && groups != nil && categories != nil) {
+		[[self class] linkProducts:products toCategories:categories];
+		
+		NSMutableDictionary *tempDictionary = [NSMutableDictionary dictionaryWithCapacity:groups.count];
+		NSArray *productsWithinCurrentGroup;
+		for (BopplProductGroup *currentGroup in groups) {
+			productsWithinCurrentGroup = [products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productCategoryIdentifier.productGroupIdentifier == %d", currentGroup.identifier]];
+			tempDictionary[@(currentGroup.identifier)] = productsWithinCurrentGroup;
+		}
+		return [NSDictionary dictionaryWithDictionary:tempDictionary];
+	}
+	
+	NSLog(@"Trying to filter products by group without supplying products, groups or categories.");
+	return nil;
+}
 
 - (void)downloadThumbnailImageWithDownloader:(WebImageDownloader *)downloader completion:(void (^)())completion
 {

@@ -54,4 +54,32 @@
 	return [[self alloc] initWithDictionary:dictionary];
 }
 
+#pragma mark BopplProductModifiers
+
++ (NSDictionary *)dictionaryFromProductModifiers:(NSArray *)modifiers
+{
+	if (modifiers != nil) {
+		NSMutableDictionary *tempDictionary = [NSMutableDictionary dictionaryWithCapacity:modifiers.count];
+		for (BopplProductModifier *currentModifier in modifiers) {
+			tempDictionary[@(currentModifier.modifierIdentifier)] = currentModifier;
+		}
+		return [NSDictionary dictionaryWithDictionary:tempDictionary];
+	}
+	
+	NSLog(@"Trying to index a nil NSArray.");
+	return nil;
+}
+
++ (void)linkModifiers:(NSArray *)modifiers toProducts:(NSArray *)products
+{
+	if (modifiers != nil && products != nil) {
+		NSDictionary *indexedProducts = [BopplProduct dictionaryFromProducts:products];
+		for (BopplProductModifier *currentModifier in modifiers) {
+			currentModifier.product = indexedProducts[@(currentModifier.productIdentifier)];
+		}
+	}
+	
+	NSLog(@"Trying to link arrays in %s but at least one is nil.", __PRETTY_FUNCTION__);
+}
+
 @end

@@ -24,4 +24,6 @@
 - (instancetype)initWithJSONData:(NSData *)data;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
++ (NSDictionary *)dictionaryFromProductModifierCategories:(NSArray *)modifierCategories;
+
 @end

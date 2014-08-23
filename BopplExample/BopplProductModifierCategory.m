@@ -62,4 +62,20 @@
 	return [[self alloc] initWithDictionary:dictionary];
 }
 
+#pragma mark BopplProductModifierCategories
+
++ (NSDictionary *)dictionaryFromProductModifierCategories:(NSArray *)modifierCategories
+{
+	if (modifierCategories != nil) {
+		NSMutableDictionary *tempDictionary = [NSMutableDictionary dictionaryWithCapacity:modifierCategories.count];
+		for (BopplProductModifierCategory *currentModifierCategory in modifierCategories) {
+			tempDictionary[@(currentModifierCategory.identifier)] = currentModifierCategory;
+		}
+		return [NSDictionary dictionaryWithDictionary:tempDictionary];
+	}
+	
+	NSLog(@"Trying to index a nil NSArray.");
+	return nil;
+}
+
 @end

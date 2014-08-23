@@ -39,4 +39,10 @@
 
 - (void)downloadThumbnailImageWithDownloader:(WebImageDownloader *)downloader completion:(void (^)())completion;
 
++ (NSDictionary *)dictionaryFromProducts:(NSArray *)products;
++ (void)linkProducts:(NSArray *)products toCategories:(NSArray *)categories;
++ (void)linkProducts:(NSArray *)products toGroups:(NSArray *)groups withCategories:(NSArray *)categories;
++ (NSDictionary *)filterProducts:(NSArray *)products byCategories:(NSArray *)categories;
++ (NSDictionary *)filterProducts:(NSArray *)products byGroups:(NSArray *)groups withCategories:(NSArray *)categories;
+
 @end
