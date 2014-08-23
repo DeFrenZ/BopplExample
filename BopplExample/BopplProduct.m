@@ -33,11 +33,11 @@
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary)
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"id"]) _identifier = [dictionary[@"id"] unsignedIntegerValue];
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"product_id"]) _productIdentifier = [dictionary[@"product_id"] unsignedIntegerValue];
-		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"venueid"]) _venueIdentifier = [dictionary[@"venueid"] unsignedIntegerValue];
+		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"venue_id"]) _venueIdentifier = [dictionary[@"venue_id"] unsignedIntegerValue];
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"product_category_id"]) _productCategoryIdentifier = [dictionary[@"product_category_id"] unsignedIntegerValue];
 		SET_VAR_OF_TYPE_OR_RETURN_NIL_AND_LOG(_name, NSString, dictionary[@"product_name"])
-		SET_VAR_OF_TYPE_OR_RETURN_NIL_AND_LOG(_productDescription, NSString, dictionary[@"product_desc"])
-		SET_VAR_OF_TYPE_OR_RETURN_NIL_AND_LOG(_thumbnailImageURL, NSURL, [NSURL URLWithString:dictionary[@"image_thumb_url"]])
+		SET_STRING_VAR_TREATING_EMPTY_AS_NIL(_productDescription, dictionary[@"product_desc"])
+		_thumbnailImageURL = [NSURL URLWithString:dictionary[@"image_thumb_url"]];
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"price"]) _price = [dictionary[@"price"] floatValue];
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"free_product"]) _isFree = [dictionary[@"free_product"] boolValue];
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"tax_amount"]) _taxes = [dictionary[@"tax_amount"] floatValue];

@@ -62,6 +62,15 @@ static NSString *baseAPIURL = @"https://services-sandbox.boppl.me/api/v0.0.3";
 
 #pragma mark Boppl Service utilities
 
++ (NSArray *)arrayByConvertingItemsOfArray:(NSArray *)itemArray toClass:(Class)itemClass
+{
+	NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:itemArray.count];
+	for (NSDictionary *itemDictionary in itemArray) {
+		[tempArray addObject:[[itemClass alloc] initWithDictionary:itemDictionary]];
+	}
+	return [NSArray arrayWithArray:tempArray];
+}
+
 static NSString *HTTPHeaderFieldAuthorization = @"Authorization";
 
 - (void)callBopplServiceAtURL:(NSURL *)serviceURL completion:(void (^)(NSArray *, NSHTTPURLResponse *, NSError *))completion
@@ -113,13 +122,41 @@ static NSString *HTTPHeaderFieldAuthorization = @"Authorization";
 
 static NSUInteger defaultVenueID = 4;
 
-+ (NSArray *)arrayByConvertingItemsOfArray:(NSArray *)itemArray toClass:(Class)itemClass
+- (void)callAPIWithCallName:(NSString *)APICallName withVenueID:(NSInteger)venueID completion:(void (^)(NSArray *, NSHTTPURLResponse *, NSError *))completion
 {
-	NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:itemArray.count];
-	for (NSDictionary *itemDictionary in itemArray) {
-		[tempArray addObject:[[itemClass alloc] initWithDictionary:itemDictionary]];
+	if ([APICallName isEqualToString:BopplAPICallNameGetModifierCategoriesForVenue]) {
+		[self getModifierCategoriesForVenueID:venueID completion:completion];
+	} else if ([APICallName isEqualToString:BopplAPICallNameGetModifiersForVenue]) {
+		[self getModifiersForVenueID:venueID completion:completion];
+	} else if ([APICallName isEqualToString:BopplAPICallNameGetProductCategoriesForVenue]) {
+		[self getProductCategoriesForVenueID:venueID completion:completion];
+	} else if ([APICallName isEqualToString:BopplAPICallNameGetProductGroupsForVenue]) {
+		[self getProductGroupsForVenueID:venueID completion:completion];
+	} else if ([APICallName isEqualToString:BopplAPICallNameGetProductsForVenue]) {
+		[self getProductsForVenueID:venueID completion:completion];
+	} else if ([APICallName isEqualToString:BopplAPICallNameGetProductWithIDForVenue] || [APICallName isEqualToString:BopplAPICallNameGetProductsByCategoryForVenue] || [APICallName isEqualToString:BopplAPICallNameGetProductsByGroupForVenue]) {
+		NSLog(@"Trying to call API with name %@ missing a parameter.", APICallName);
+		completion(nil, nil, nil);
+	} else {
+		NSLog(@"Trying to call API with invalid name %@.", APICallName);
+		completion(nil, nil, nil);
 	}
-	return [NSArray arrayWithArray:tempArray];
+}
+
+- (void)callAPIWithCallName:(NSString *)APICallName withVenueID:(NSInteger)venueID otherID:(NSInteger)otherID completion:(void (^)(NSArray *, NSHTTPURLResponse *, NSError *))completion
+{
+	if ([APICallName isEqualToString:BopplAPICallNameGetProductWithIDForVenue]) {
+		[self getProductForVenueID:venueID withProductID:otherID completion:^(BopplProduct *product, NSHTTPURLResponse *response, NSError *error) {
+			completion(@[product], response, error);
+		}];
+	} else if ([APICallName isEqualToString:BopplAPICallNameGetProductsByCategoryForVenue]) {
+		[self getProductsForVenueID:venueID withCategoryID:otherID completion:completion];
+	} else if ([APICallName isEqualToString:BopplAPICallNameGetProductsByGroupForVenue]) {
+		[self getProductsForVenueID:venueID withGroupID:otherID completion:completion];
+	} else {
+		NSLog(@"Called %s on invalid or single-argument API call %@. Retrying by ignoring the second argument.", __PRETTY_FUNCTION__, APICallName);
+		[self callAPIWithCallName:APICallName withVenueID:venueID completion:completion];
+	}
 }
 
 - (void)authenticateAccountWithCompletion:(void (^)(BOOL, NSHTTPURLResponse *, NSError *))completion

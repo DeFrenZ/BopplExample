@@ -34,7 +34,7 @@
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary)
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"id"]) _identifier = [dictionary[@"id"] unsignedIntegerValue];
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"modifier_id"]) _modifierIdentifier = [dictionary[@"modifier_id"] unsignedIntegerValue];
-		SET_VAR_OF_TYPE_OR_RETURN_NIL_AND_LOG(_modifierDescription, NSString, dictionary[@"modifier_desc"])
+		SET_STRING_VAR_TREATING_EMPTY_AS_NIL(_modifierDescription, dictionary[@"modifier_desc"])
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"price"]) _price = [dictionary[@"price"] floatValue];
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"popularity"]) _popularity = [dictionary[@"popularity"] unsignedIntegerValue];
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"active"]) _isActive = [dictionary[@"active"] boolValue];

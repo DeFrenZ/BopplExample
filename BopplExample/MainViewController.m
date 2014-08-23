@@ -7,8 +7,11 @@
 //
 
 #import "MainViewController.h"
-#import "ResultViewController.h"
+#import "ProductListViewController.h"
 #import "BopplServer.h"
+
+#define VIEW_ANIMATION_DURATION 0.4
+#pragma mark -
 
 @interface MainViewController ()
 
@@ -17,18 +20,26 @@
 @property (strong, nonatomic) NSArray *APICallsNames;
 @property (strong, nonatomic) id<NSObject> lastAPIResult;
 
+@property (strong, nonatomic) IBOutlet UITextField *venueIDTextField;
+@property (strong, nonatomic) IBOutlet UITextField *productIDTextField;
+@property (strong, nonatomic) IBOutlet UITextField *categoryIDTextField;
+@property (strong, nonatomic) IBOutlet UITextField *groupIDTextField;
+@property (strong, nonatomic) IBOutletCollection(UITextField) NSArray *otherIDTextFields;
+@property (strong, nonatomic) IBOutletCollection(UITextField) NSArray *allTextFields;
+@property (strong, nonatomic) IBOutlet UIView *productIDSelectionView;
+@property (strong, nonatomic) IBOutlet UIView *categoryIDSelectionView;
+@property (strong, nonatomic) IBOutlet UIView *groupIDSelectionView;
+@property (strong, nonatomic) IBOutletCollection(UIView) NSArray *otherIDSelectionViews;
 @property (strong, nonatomic) IBOutlet UIPickerView *APICallsNamesPickerView;
+@property (strong, nonatomic) IBOutlet UIButton *callAPIButton;
 
 @end
 
 @implementation MainViewController
 
 static NSString *loginViewControllerSegueIdentifier = @"LoginSegue";
-static NSString *resultViewControllerSegueIdentifier = @"ResultSegue";
 
 #pragma mark UIViewController
-
-static NSString *APICallNameGetModifierCategoriesForVenue = @"Get Modifier Categories for Venue";
 
 - (void)viewDidLoad
 {
@@ -41,7 +52,7 @@ static NSString *APICallNameGetModifierCategoriesForVenue = @"Get Modifier Categ
 		self.server.account = savedAccount;
 	}
 	self.isAuthenticated = NO;
-	self.APICallsNames = @[APICallNameGetModifierCategoriesForVenue];
+	self.APICallsNames = @[BopplAPICallNameGetProductsForVenue, BopplAPICallNameGetProductsByCategoryForVenue, BopplAPICallNameGetProductsByGroupForVenue];
 	[self.APICallsNamesPickerView selectRow:0 inComponent:0 animated:NO];
 }
 
@@ -60,10 +71,8 @@ static NSString *APICallNameGetModifierCategoriesForVenue = @"Get Modifier Categ
 		LoginViewController *destinationViewController = (LoginViewController *)segue.destinationViewController;
 		destinationViewController.server = self.server;
 		destinationViewController.delegate = self;
-	} else if ([segue.identifier isEqualToString:resultViewControllerSegueIdentifier]) {
-		ResultViewController *destinationViewController = (ResultViewController *)segue.destinationViewController;
-		destinationViewController.resultObject = self.lastAPIResult;
 	}
+#warning TODO: add segues for product list
 }
 
 #pragma mark UIAlertViewDelegate
@@ -71,6 +80,26 @@ static NSString *APICallNameGetModifierCategoriesForVenue = @"Get Modifier Categ
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
 	[self performSegueWithIdentifier:loginViewControllerSegueIdentifier sender:self];
+}
+
+#pragma mark UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+	UITextField *selectedOtherIDTextField = [self selectedOtherIDTextField];
+	if (textField == self.venueIDTextField) {
+		if (selectedOtherIDTextField) {
+			[selectedOtherIDTextField becomeFirstResponder];
+			return NO;
+		}
+	} else if (textField != selectedOtherIDTextField) {
+		return YES;
+	}
+	
+	if ([self shouldCallAPIButtonBeEnabled]) {
+		[self callAPIButtonPressed:nil];
+	}
+	return YES;
 }
 
 #pragma mark UIPickerViewDelegate
@@ -88,6 +117,28 @@ static NSString *APICallNameGetModifierCategoriesForVenue = @"Get Modifier Categ
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
 	return self.APICallsNames[row];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+	UITextField *selectedTextField = [self selectedOtherIDTextField];
+	UIView *selectionView = [self selectionViewOfTextField:selectedTextField];
+	[UIView animateWithDuration:VIEW_ANIMATION_DURATION animations:^{
+		for (UIView *view in self.otherIDSelectionViews) {
+			[view setHidden:YES];
+			[view setUserInteractionEnabled:NO];
+		}
+		for (UITextField *textField in self.otherIDTextFields) {
+			[textField resignFirstResponder];
+		}
+		
+		[selectionView setHidden:NO];
+	} completion:^(BOOL finished) {
+		[selectionView setUserInteractionEnabled:YES];
+	}];
+	
+	[self.venueIDTextField setReturnKeyType:(selectedTextField != nil)? UIReturnKeyNext : UIReturnKeySend];
+	[self checkCallAPIButtonEnabling];
 }
 
 #pragma mark UIPickerViewDataSource
@@ -110,8 +161,6 @@ static NSString *APICallNameGetModifierCategoriesForVenue = @"Get Modifier Categ
 	if (controller != nil) {
 		[controller dismissViewControllerAnimated:YES completion:nil];
 	}
-	
-	NSLog(@"Login successful!");
 }
 
 #pragma mark IBAction
@@ -119,19 +168,23 @@ static NSString *APICallNameGetModifierCategoriesForVenue = @"Get Modifier Categ
 - (IBAction)callAPIButtonPressed:(id)sender
 {
 	NSString *selectedAPICallName = self.APICallsNames[[self.APICallsNamesPickerView selectedRowInComponent:0]];
-	if ([selectedAPICallName isEqualToString:APICallNameGetModifierCategoriesForVenue]) {
-		[self.server getModifierCategoriesForVenueID:4 completion:^(NSArray *modifierCategories, NSHTTPURLResponse *response, NSError *error) {
-			dispatch_async(dispatch_get_main_queue(), ^{
-				if (error != nil) {
-					UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"API Call Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-					[alert show];
-				} else {
-					self.lastAPIResult = modifierCategories;
-					[self performSegueWithIdentifier:resultViewControllerSegueIdentifier sender:self];
-				}
-			});
-		}];
-	}
+	[self.server callAPIWithCallName:selectedAPICallName withVenueID:[self selectedVenueID] otherID:[self selectedOtherID] completion:^(NSArray *result, NSHTTPURLResponse *response, NSError *error) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			if (error != nil) {
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"API Call Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
+			} else {
+				self.lastAPIResult = result;
+				NSLog(@"Received object: %@", self.lastAPIResult);
+#warning TODO: call segue
+			}
+		});
+	}];
+}
+
+- (IBAction)textFieldHasEditedText:(id)sender
+{
+	[self checkCallAPIButtonEnabling];
 }
 
 #pragma mark MainViewController
@@ -155,6 +208,71 @@ static NSString *APICallNameGetModifierCategoriesForVenue = @"Get Modifier Categ
 			});
 		}];
 	}
+}
+
+- (NSString *)selectedAPICallName
+{
+	return self.APICallsNames[[self.APICallsNamesPickerView selectedRowInComponent:0]];
+}
+
+- (UITextField *)selectedOtherIDTextField
+{
+	NSString *selectedAPICallName = [self selectedAPICallName];
+	if ([selectedAPICallName isEqualToString:BopplAPICallNameGetProductWithIDForVenue]) {
+		return self.productIDTextField;
+	} else if ([selectedAPICallName isEqualToString:BopplAPICallNameGetProductsByCategoryForVenue]) {
+		return self.categoryIDTextField;
+	} else if ([selectedAPICallName isEqualToString:BopplAPICallNameGetProductsByGroupForVenue]) {
+		return self.groupIDTextField;
+	}
+	return nil;
+}
+
+- (UIView *)selectionViewOfTextField:(UITextField *)textField
+{
+	if (textField == self.productIDTextField) {
+		return self.productIDSelectionView;
+	} else if (textField == self.categoryIDTextField) {
+		return self.categoryIDSelectionView;
+	} else if (textField == self.groupIDTextField) {
+		return self.groupIDSelectionView;
+	}
+	return nil;
+}
+
+- (BOOL)shouldCallAPIButtonBeEnabled
+{
+	if ([self selectedVenueID] == NSNotFound) {
+		return NO;
+	}
+	
+	UITextField *selectedTextField = [self selectedOtherIDTextField];
+	if (selectedTextField == nil || [self selectedOtherID] != NSNotFound) {
+		return YES;
+	}
+	return NO;
+}
+
+- (void)checkCallAPIButtonEnabling
+{
+	[self.callAPIButton setEnabled:[self shouldCallAPIButtonBeEnabled]];
+}
+
+- (NSInteger)selectedVenueID
+{
+	if (self.venueIDTextField.text != nil && self.venueIDTextField.text.length > 0) {
+		return [self.venueIDTextField.text integerValue];
+	}
+	return NSNotFound;
+}
+
+- (NSInteger)selectedOtherID
+{
+	UITextField *selectedTextField = [self selectedOtherIDTextField];
+	if (selectedTextField != nil && selectedTextField.text != nil && selectedTextField.text.length > 0) {
+		return [selectedTextField.text integerValue];
+	}
+	return NSNotFound;
 }
 
 @end

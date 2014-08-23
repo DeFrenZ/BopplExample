@@ -33,7 +33,7 @@
 	if (self) {
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary)
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"id"]) _identifier = [dictionary[@"id"] unsignedIntegerValue];
-		SET_VAR_OF_TYPE_OR_RETURN_NIL_AND_LOG(_categoryDescription, NSString, dictionary[@"category_desc"])
+		SET_STRING_VAR_TREATING_EMPTY_AS_NIL(_categoryDescription, dictionary[@"category_desc"])
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"product_group_id"]) _productGroupIdentifier = [dictionary[@"product_group_id"] unsignedIntegerValue];
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"sort_order"]) _sortOrder = [dictionary[@"sort_order"] unsignedIntegerValue];
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"active"]) _isActive = [dictionary[@"active"] boolValue];

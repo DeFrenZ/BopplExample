@@ -24,6 +24,13 @@ NSLog(@"A parameter is an empty NSString in %s.", __PRETTY_FUNCTION__); \
 return nil; \
 }
 
+#define SET_STRING_VAR_TREATING_EMPTY_AS_NIL(var, value) \
+if ([value isKindOfClass:[NSString class]] && [value length] > 0) { \
+var = value; \
+} else { \
+var = nil; \
+}
+
 #define SET_VAR_OF_TYPE_OR_RETURN_NIL_AND_LOG(var, vartype, value) \
 if (value == nil) { \
 NSLog(@"Trying to set %s in %s but parameter is nil.", #var, __PRETTY_FUNCTION__); \

@@ -33,7 +33,7 @@
 	if (self) {
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary)
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"id"]) _identifier = [dictionary[@"id"] unsignedIntegerValue];
-		SET_VAR_OF_TYPE_OR_RETURN_NIL_AND_LOG(_categoryDescription, NSString, dictionary[@"category_desc"])
+		SET_STRING_VAR_TREATING_EMPTY_AS_NIL(_categoryDescription, dictionary[@"category_desc"])
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"override_price"]) _isOverridingPrice = [dictionary[@"override_price"] boolValue];
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"mandatory_select"]) _isMandatorySelection = [dictionary[@"mandatory_select"] boolValue];
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"multi_select"]) _isMultiSelectable = [dictionary[@"multi_select"] boolValue];

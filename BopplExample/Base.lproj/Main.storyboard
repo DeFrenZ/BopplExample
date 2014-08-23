@@ -16,9 +16,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vDJ-Gf-fzw">
-                                <rect key="frame" x="60" y="150" width="200" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vDJ-Gf-fzw">
+                                <rect key="frame" x="60" y="250" width="200" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Call API">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -26,7 +27,7 @@
                                     <action selector="callAPIButtonPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="pRC-SM-bY8"/>
                                 </connections>
                             </button>
-                            <pickerView contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cyj-hu-pRy">
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cyj-hu-pRy">
                                 <rect key="frame" x="0.0" y="406" width="320" height="162"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <connections>
@@ -34,15 +35,135 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="qz6-pe-Mz3"/>
                                 </connections>
                             </pickerView>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NEE-1g-3eq">
+                                <rect key="frame" x="0.0" y="90" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Venue ID:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fL7-3p-rDv">
+                                        <rect key="frame" x="40" y="10" width="160" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="WHi-lJ-W03">
+                                        <rect key="frame" x="220" y="10" width="60" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="phonePad" returnKeyType="send"/>
+                                        <connections>
+                                            <action selector="textFieldHasEditedText:" destination="vXZ-lx-hvc" eventType="editingChanged" id="P63-Po-CxB"/>
+                                            <outlet property="delegate" destination="vXZ-lx-hvc" id="RFw-QM-YNk"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1D7-cj-g6b">
+                                <rect key="frame" x="0.0" y="140" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Product ID:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FLT-kU-rv6">
+                                        <rect key="frame" x="40" y="10" width="160" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="oUQ-jw-k0k">
+                                        <rect key="frame" x="220" y="10" width="60" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="phonePad" returnKeyType="send"/>
+                                        <connections>
+                                            <action selector="textFieldHasEditedText:" destination="vXZ-lx-hvc" eventType="editingChanged" id="Zg9-ZT-1zE"/>
+                                            <outlet property="delegate" destination="vXZ-lx-hvc" id="5vo-1u-SNN"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NPj-mr-s7d">
+                                <rect key="frame" x="0.0" y="140" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Category ID:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lly-Ob-QMr">
+                                        <rect key="frame" x="40" y="10" width="160" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="tex-kd-zv8">
+                                        <rect key="frame" x="220" y="10" width="60" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="phonePad" returnKeyType="send"/>
+                                        <connections>
+                                            <action selector="textFieldHasEditedText:" destination="vXZ-lx-hvc" eventType="editingChanged" id="jSe-RE-FWf"/>
+                                            <outlet property="delegate" destination="vXZ-lx-hvc" id="aBJ-5h-ajG"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5uq-d8-Nig">
+                                <rect key="frame" x="0.0" y="140" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Group ID:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gJM-0C-1BQ">
+                                        <rect key="frame" x="40" y="10" width="160" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="T5C-sp-hQR">
+                                        <rect key="frame" x="220" y="10" width="60" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="phonePad" returnKeyType="send"/>
+                                        <connections>
+                                            <action selector="textFieldHasEditedText:" destination="vXZ-lx-hvc" eventType="editingChanged" id="bVa-nD-av2"/>
+                                            <outlet property="delegate" destination="vXZ-lx-hvc" id="MuJ-BV-MJP"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Cyj-hu-pRy" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="1Ou-Bg-HGK"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Cyj-hu-pRy" secondAttribute="bottom" id="Aha-7G-4x3"/>
+                            <constraint firstAttribute="centerX" secondItem="Cyj-hu-pRy" secondAttribute="centerX" id="ZG1-45-VLF"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="BopplExample" id="cC8-zg-vA3"/>
                     <connections>
                         <outlet property="APICallsNamesPickerView" destination="Cyj-hu-pRy" id="biY-8Q-thY"/>
+                        <outlet property="callAPIButton" destination="vDJ-Gf-fzw" id="l6y-j4-iT4"/>
+                        <outlet property="categoryIDSelectionView" destination="NPj-mr-s7d" id="ggk-68-81C"/>
+                        <outlet property="categoryIDTextField" destination="tex-kd-zv8" id="BCc-2z-D8I"/>
+                        <outlet property="groupIDSelectionView" destination="5uq-d8-Nig" id="C7z-ej-JW4"/>
+                        <outlet property="groupIDTextField" destination="T5C-sp-hQR" id="rmf-cv-fxe"/>
+                        <outlet property="productIDSelectionView" destination="1D7-cj-g6b" id="QYj-iw-f5W"/>
+                        <outlet property="productIDTextField" destination="oUQ-jw-k0k" id="9IB-OV-GRq"/>
+                        <outlet property="venueIDTextField" destination="WHi-lJ-W03" id="7xy-Jf-ibG"/>
+                        <outletCollection property="otherIDTextFields" destination="oUQ-jw-k0k" id="eQW-Hm-X5A"/>
+                        <outletCollection property="otherIDTextFields" destination="tex-kd-zv8" id="anc-Bc-UFh"/>
+                        <outletCollection property="otherIDTextFields" destination="T5C-sp-hQR" id="smf-f4-wt6"/>
+                        <outletCollection property="allTextFields" destination="WHi-lJ-W03" id="zyl-U9-ir4"/>
+                        <outletCollection property="allTextFields" destination="oUQ-jw-k0k" id="jbw-Aj-aqp"/>
+                        <outletCollection property="allTextFields" destination="tex-kd-zv8" id="Zls-8K-Nzv"/>
+                        <outletCollection property="allTextFields" destination="T5C-sp-hQR" id="6bH-fQ-Xbc"/>
+                        <outletCollection property="otherIDSelectionViews" destination="1D7-cj-g6b" id="hb9-ig-hOO"/>
+                        <outletCollection property="otherIDSelectionViews" destination="NPj-mr-s7d" id="b1R-Ve-c3x"/>
+                        <outletCollection property="otherIDSelectionViews" destination="5uq-d8-Nig" id="pyv-0E-ueF"/>
                         <segue destination="Vbv-r6-YGI" kind="modal" identifier="LoginSegue" id="Xet-0j-0f0"/>
                         <segue destination="gYC-a0-Pi8" kind="push" identifier="ResultSegue" id="ELO-Xp-unF"/>
                     </connections>
@@ -51,10 +172,10 @@
             </objects>
             <point key="canvasLocation" x="606" y="25"/>
         </scene>
-        <!--Result View Controller - Result-->
+        <!--Product List View Controller - Result-->
         <scene sceneID="Ud2-wM-gpT">
             <objects>
-                <viewController id="gYC-a0-Pi8" customClass="ResultViewController" sceneMemberID="viewController">
+                <viewController id="gYC-a0-Pi8" customClass="ProductListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QuN-Fg-HLB"/>
                         <viewControllerLayoutGuide type="bottom" id="TF1-2h-NNa"/>
@@ -62,26 +183,9 @@
                     <view key="view" contentMode="scaleToFill" id="dia-eM-Lyl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JUo-dP-5iV">
-                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="JUo-dP-5iV" firstAttribute="top" secondItem="QuN-Fg-HLB" secondAttribute="bottom" id="sYj-a2-iPa"/>
-                            <constraint firstItem="TF1-2h-NNa" firstAttribute="top" secondItem="JUo-dP-5iV" secondAttribute="bottom" id="wzw-PQ-l7W"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Result" id="efZ-fx-MoY"/>
-                    <connections>
-                        <outlet property="resultTextView" destination="JUo-dP-5iV" id="JV9-Hk-tbm"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kcF-y2-824" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

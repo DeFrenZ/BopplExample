@@ -32,7 +32,7 @@
 	if (self) {
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary)
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"id"]) _identifier = [dictionary[@"id"] unsignedIntegerValue];
-		SET_VAR_OF_TYPE_OR_RETURN_NIL_AND_LOG(_groupDescription, NSString, dictionary[@"group_desc"])
+		SET_STRING_VAR_TREATING_EMPTY_AS_NIL(_groupDescription, dictionary[@"group_desc"])
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"sort_order"]) _sortOrder = [dictionary[@"sort_order"] unsignedIntegerValue];
 		IF_NIL_RETURN_NIL_AND_LOG(dictionary[@"active"]) _isActive = [dictionary[@"active"] boolValue];
 	}
