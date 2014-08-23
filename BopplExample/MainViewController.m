@@ -35,7 +35,7 @@ static NSString *APICallNameGetModifierCategoriesForVenue = @"Get Modifier Categ
     [super viewDidLoad];
 	
 	self.server = [BopplServer new];
-	BopplAccount *savedAccount;
+	BasicHTTPAuthAccount *savedAccount;
 #warning TODO: try to load the account from the keychain
 	if (savedAccount != nil) {
 		self.server.account = savedAccount;
@@ -120,7 +120,7 @@ static NSString *APICallNameGetModifierCategoriesForVenue = @"Get Modifier Categ
 {
 	NSString *selectedAPICallName = self.APICallsNames[[self.APICallsNamesPickerView selectedRowInComponent:0]];
 	if ([selectedAPICallName isEqualToString:APICallNameGetModifierCategoriesForVenue]) {
-		[self.server getModifierCategoriesForVenue:4 completion:^(NSArray *modifierCategories, NSHTTPURLResponse *response, NSError *error) {
+		[self.server getModifierCategoriesForVenueID:4 completion:^(NSArray *modifierCategories, NSHTTPURLResponse *response, NSError *error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
 				if (error != nil) {
 					UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"API Call Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];

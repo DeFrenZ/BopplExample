@@ -7,25 +7,25 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "BopplAccount.h"
+#import "BasicHTTPAuthAccount.h"
 
-@interface BopplAccountTest : XCTestCase
+@interface BasicHTTPAuthAccountTest : XCTestCase
 
-@property (strong, nonatomic) BopplAccount *exampleAccount;
-@property (strong, nonatomic) BopplAccount *exampleInvalidAccount;
+@property (strong, nonatomic) BasicHTTPAuthAccount *exampleAccount;
+@property (strong, nonatomic) BasicHTTPAuthAccount *exampleInvalidAccount;
 @property (strong, nonatomic) NSString *exampleInvalidAccountEncodedAuthorizationString;
 
 @end
 
-@implementation BopplAccountTest
+@implementation BasicHTTPAuthAccountTest
 
 #pragma mark XCTestCase
 
 - (void)setUp
 {
 	[super setUp];
-	self.exampleAccount = [BopplAccount accountWithUsername:@"defrenz@gmail.com" andPassword:@"password123"];
-	self.exampleInvalidAccount = [BopplAccount accountWithUsername:@"test@example.com" andPassword:@"password"];
+	self.exampleAccount = [BasicHTTPAuthAccount accountWithUsername:@"defrenz@gmail.com" andPassword:@"password123"];
+	self.exampleInvalidAccount = [BasicHTTPAuthAccount accountWithUsername:@"test@example.com" andPassword:@"password"];
 	self.exampleInvalidAccountEncodedAuthorizationString = @"dGVzdEBleGFtcGxlLmNvbTpwYXNzd29yZA==";
 }
 
@@ -33,47 +33,47 @@
 
 - (void)testAccountWithValidCredentials
 {
-	BopplAccount *testAccount;
+	BasicHTTPAuthAccount *testAccount;
 	
-	testAccount = [BopplAccount accountWithUsername:self.exampleInvalidAccount.username andPassword:self.exampleInvalidAccount.password];
+	testAccount = [BasicHTTPAuthAccount accountWithUsername:self.exampleInvalidAccount.username andPassword:self.exampleInvalidAccount.password];
 	XCTAssertNotNil(testAccount, @"Should have returned a not nil BopplAccount.");
 	
-	testAccount = [BopplAccount accountWithEncodedAuthorizationString:self.exampleInvalidAccountEncodedAuthorizationString];
+	testAccount = [BasicHTTPAuthAccount accountWithEncodedAuthorizationString:self.exampleInvalidAccountEncodedAuthorizationString];
 	XCTAssertNotNil(testAccount, @"Should have returned a not nil BopplAccount.");
 }
 
 - (void)testAccountWithInvalidCredentials
 {
-	BopplAccount *testAccount;
+	BasicHTTPAuthAccount *testAccount;
 	
-	testAccount = [BopplAccount accountWithUsername:nil andPassword:nil];
+	testAccount = [BasicHTTPAuthAccount accountWithUsername:nil andPassword:nil];
 	XCTAssertNil(testAccount, @"Should have returned a nil BopplAccount.");
 	
-	testAccount = [BopplAccount accountWithUsername:nil andPassword:@""];
+	testAccount = [BasicHTTPAuthAccount accountWithUsername:nil andPassword:@""];
 	XCTAssertNil(testAccount, @"Should have returned a nil BopplAccount.");
 	
-	testAccount = [BopplAccount accountWithUsername:@"" andPassword:nil];
+	testAccount = [BasicHTTPAuthAccount accountWithUsername:@"" andPassword:nil];
 	XCTAssertNil(testAccount, @"Should have returned a nil BopplAccount.");
 	
-	testAccount = [BopplAccount accountWithUsername:@"" andPassword:@""];
+	testAccount = [BasicHTTPAuthAccount accountWithUsername:@"" andPassword:@""];
 	XCTAssertNil(testAccount, @"Should have returned a nil BopplAccount.");
 	
-	testAccount = [BopplAccount accountWithUsername:self.exampleInvalidAccount.username andPassword:nil];
+	testAccount = [BasicHTTPAuthAccount accountWithUsername:self.exampleInvalidAccount.username andPassword:nil];
 	XCTAssertNil(testAccount, @"Should have returned a nil BopplAccount.");
 	
-	testAccount = [BopplAccount accountWithUsername:self.exampleInvalidAccount.username andPassword:@""];
+	testAccount = [BasicHTTPAuthAccount accountWithUsername:self.exampleInvalidAccount.username andPassword:@""];
 	XCTAssertNil(testAccount, @"Should have returned a nil BopplAccount.");
 	
-	testAccount = [BopplAccount accountWithUsername:nil andPassword:self.exampleInvalidAccount.password];
+	testAccount = [BasicHTTPAuthAccount accountWithUsername:nil andPassword:self.exampleInvalidAccount.password];
 	XCTAssertNil(testAccount, @"Should have returned a nil BopplAccount.");
 	
-	testAccount = [BopplAccount accountWithUsername:@"" andPassword:self.exampleInvalidAccount.password];
+	testAccount = [BasicHTTPAuthAccount accountWithUsername:@"" andPassword:self.exampleInvalidAccount.password];
 	XCTAssertNil(testAccount, @"Should have returned a nil BopplAccount.");
 	
-	testAccount = [BopplAccount accountWithEncodedAuthorizationString:nil];
+	testAccount = [BasicHTTPAuthAccount accountWithEncodedAuthorizationString:nil];
 	XCTAssertNil(testAccount, @"Should have returned a nil BopplAccount.");
 	
-	testAccount = [BopplAccount accountWithEncodedAuthorizationString:@""];
+	testAccount = [BasicHTTPAuthAccount accountWithEncodedAuthorizationString:@""];
 	XCTAssertNil(testAccount, @"Should have returned a nil BopplAccount.");
 }
 
@@ -82,7 +82,7 @@
 	NSString *encodedString = [self.exampleInvalidAccount encodedAuthorizationString];
 	XCTAssertNotNil(encodedString, @"Should have returned a not nil encodedString.");
 	XCTAssertEqualObjects(encodedString, self.exampleInvalidAccountEncodedAuthorizationString, @"The encoded string should be equal to the precomputed one.");
-	BopplAccount *testAccount = [BopplAccount accountWithEncodedAuthorizationString:encodedString];
+	BasicHTTPAuthAccount *testAccount = [BasicHTTPAuthAccount accountWithEncodedAuthorizationString:encodedString];
 	XCTAssertEqualObjects(testAccount, self.exampleInvalidAccount, @"The reconstructed account should be equal to the starting one.");
 }
 
@@ -90,7 +90,7 @@
 {
 	NSString *encodedString = [self.exampleAccount encodedAuthorizationString];
 	XCTAssertNotEqualObjects(encodedString, self.exampleInvalidAccountEncodedAuthorizationString, @"The encoded string should be different from the precomputed one.");
-	BopplAccount *testAccount = [BopplAccount accountWithEncodedAuthorizationString:encodedString];
+	BasicHTTPAuthAccount *testAccount = [BasicHTTPAuthAccount accountWithEncodedAuthorizationString:encodedString];
 	XCTAssertNotEqualObjects(testAccount, self.exampleInvalidAccount, @"The reconstructed account should be different from the starting one.");
 }
 

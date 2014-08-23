@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Davide De Franceschi. All rights reserved.
 //
 
-#import "BopplAccount.h"
+#import "BasicHTTPAuthAccount.h"
 #import "init_macros.h"
 
-@implementation BopplAccount
+@implementation BasicHTTPAuthAccount
 
 #pragma mark Initialization
 
@@ -133,7 +133,7 @@
 
 #pragma mark Equality
 
-- (BOOL)isEqualToAccount:(BopplAccount *)anAccount
+- (BOOL)isEqualToAccount:(BasicHTTPAuthAccount *)anAccount
 {
 	if (anAccount == nil) {
 		return NO;
@@ -150,11 +150,11 @@
 		return YES;
 	}
 	
-	if (![object isKindOfClass:[BopplAccount class]]) {
+	if (![object isKindOfClass:[BasicHTTPAuthAccount class]]) {
 		return NO;
 	}
 	
-	return [self isEqualToAccount:(BopplAccount *)object];
+	return [self isEqualToAccount:(BasicHTTPAuthAccount *)object];
 }
 
 - (NSUInteger)hash

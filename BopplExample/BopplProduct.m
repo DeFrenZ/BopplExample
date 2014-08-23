@@ -7,6 +7,8 @@
 //
 
 #import "BopplProduct.h"
+#import "BopplProductCategory.h"
+#import "BopplProductModifierCategory.h"
 #import "init_macros.h"
 
 @implementation BopplProduct
@@ -68,6 +70,21 @@
 + (instancetype)productWithDictionary:(NSDictionary *)dictionary
 {
 	return [[self alloc] initWithDictionary:dictionary];
+}
+
+#pragma mark BopplProduct
+
+- (void)downloadThumbnailImageWithDownloader:(WebImageDownloader *)downloader completion:(void (^)())completion
+{
+	if (downloader == nil) {
+		NSLog(@"Trying to download thumbnail image with nil downloader.");
+		return;
+	}
+	
+	[downloader downloadImageFromURL:self.thumbnailImageURL completion:^(UIImage *downloadedImage) {
+		self.thumbnailImage = downloadedImage;
+		completion(self.thumbnailImage);
+	}];
 }
 
 @end

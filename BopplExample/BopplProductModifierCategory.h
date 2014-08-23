@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "BopplProductModifier.h"
 
 @interface BopplProductModifierCategory : NSObject
 

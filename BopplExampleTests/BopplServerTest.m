@@ -15,8 +15,8 @@
 
 @interface BopplServerTest : XCTestCase
 
-@property (strong, nonatomic) BopplAccount *exampleAccount;
-@property (strong, nonatomic) BopplAccount *exampleInvalidAccount;
+@property (strong, nonatomic) BasicHTTPAuthAccount *exampleAccount;
+@property (strong, nonatomic) BasicHTTPAuthAccount *exampleInvalidAccount;
 @property (strong, nonatomic) BopplServer *exampleServer;
 
 @end
@@ -28,8 +28,8 @@
 - (void)setUp
 {
     [super setUp];
-	self.exampleAccount = [BopplAccount accountWithUsername:@"defrenz@gmail.com" andPassword:@"password123"];
-	self.exampleInvalidAccount = [BopplAccount accountWithUsername:@"test@example.com" andPassword:@"password"];
+	self.exampleAccount = [BasicHTTPAuthAccount accountWithUsername:@"defrenz@gmail.com" andPassword:@"password123"];
+	self.exampleInvalidAccount = [BasicHTTPAuthAccount accountWithUsername:@"test@example.com" andPassword:@"password"];
 	self.exampleServer = [BopplFakeServer new];
 	self.exampleServer.account = self.exampleAccount;
 }

@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "BopplProductCategory.h"
-#import "BopplProductModifierCategory.h"
+#import "WebImageDownloader.h"
+@class BopplProductCategory;
 
 @interface BopplProduct : NSObject
 
@@ -36,5 +36,7 @@
 + (instancetype)productWithDictionary:(NSDictionary *)dictionary;
 - (instancetype)initWithJSONData:(NSData *)data;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
+- (void)downloadThumbnailImageWithDownloader:(WebImageDownloader *)downloader completion:(void (^)())completion;
 
 @end

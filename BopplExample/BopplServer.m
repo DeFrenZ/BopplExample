@@ -64,7 +64,7 @@ static NSString *baseAPIURL = @"https://services-sandbox.boppl.me/api/v0.0.3";
 
 static NSString *HTTPHeaderFieldAuthorization = @"Authorization";
 
-- (void)callBopplServiceAtURL:(NSURL *)serviceURL completion:(void (^)(id, NSHTTPURLResponse *, NSError *))completion
+- (void)callBopplServiceAtURL:(NSURL *)serviceURL completion:(void (^)(NSArray *, NSHTTPURLResponse *, NSError *))completion
 {
 	if (self.account == nil) {
 		NSLog(@"Cannot use API without specifing an account.");
@@ -95,7 +95,7 @@ static NSString *HTTPHeaderFieldAuthorization = @"Authorization";
 						completion(nil, HTTPResponse, nil);
 					} else {
 						NSError *JSONError;
-						id responseCollection = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&JSONError];
+						NSArray *responseCollection = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&JSONError];
 						if (JSONError != nil) {
 							NSLog(@"Error in parsing JSON data of %d bytes. %@.", data.length, [JSONError localizedDescription]);
 							completion(nil, HTTPResponse, JSONError);
@@ -113,27 +113,97 @@ static NSString *HTTPHeaderFieldAuthorization = @"Authorization";
 
 static NSUInteger defaultVenueID = 4;
 
++ (NSArray *)arrayByConvertingItemsOfArray:(NSArray *)itemArray toClass:(Class)itemClass
+{
+	NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:itemArray.count];
+	for (NSDictionary *itemDictionary in itemArray) {
+		[tempArray addObject:[[itemClass alloc] initWithDictionary:itemDictionary]];
+	}
+	return [NSArray arrayWithArray:tempArray];
+}
+
 - (void)authenticateAccountWithCompletion:(void (^)(BOOL, NSHTTPURLResponse *, NSError *))completion
 {
 	NSURL *serviceURL = [[self class] getModifierCategoriesURLWithVenueID:defaultVenueID];
-	[self callBopplServiceAtURL:serviceURL completion:^(id JSONCollection, NSHTTPURLResponse *response, NSError *error) {
-		NSLog(@"Call to %s returned JSON object: %@.", __PRETTY_FUNCTION__, JSONCollection);
+	[self callBopplServiceAtURL:serviceURL completion:^(NSArray *JSONCollection, NSHTTPURLResponse *response, NSError *error) {
 		completion(JSONCollection != nil, response, error);
 	}];
 }
 
-- (void)getModifierCategoriesForVenue:(NSInteger)venueID completion:(void (^)(NSArray *, NSHTTPURLResponse *, NSError *))completion
+- (void)getModifierCategoriesForVenueID:(NSInteger)venueID completion:(void (^)(NSArray *, NSHTTPURLResponse *, NSError *))completion
 {
 	NSURL *serviceURL = [[self class] getModifierCategoriesURLWithVenueID:venueID];
-	[self callBopplServiceAtURL:serviceURL completion:^(id JSONCollection, NSHTTPURLResponse *response, NSError *error) {
-		NSLog(@"Call to %s returned JSON object: %@.", __PRETTY_FUNCTION__, JSONCollection);
-#warning TODO: convert collection objects to custom class
-		if (![JSONCollection isKindOfClass:[NSArray class]]) {
-			NSLog(@"The returned JSON object is inconsistent with the API call.");
+	[self callBopplServiceAtURL:serviceURL completion:^(NSArray *JSONCollection, NSHTTPURLResponse *response, NSError *error) {
+		NSArray *convertedArray = [[self class] arrayByConvertingItemsOfArray:JSONCollection toClass:[BopplProductModifierCategory class]];
+		completion(convertedArray, response, error);
+	}];
+}
+
+- (void)getModifiersForVenueID:(NSInteger)venueID completion:(void (^)(NSArray *, NSHTTPURLResponse *, NSError *))completion
+{
+	NSURL *serviceURL = [[self class] getModifiersURLWithVenueID:venueID];
+	[self callBopplServiceAtURL:serviceURL completion:^(NSArray *JSONCollection, NSHTTPURLResponse *response, NSError *error) {
+		NSArray *convertedArray = [[self class] arrayByConvertingItemsOfArray:JSONCollection toClass:[BopplProductModifier class]];
+		completion(convertedArray, response, error);
+	}];
+}
+
+- (void)getProductForVenueID:(NSInteger)venueID withProductID:(NSInteger)productID completion:(void (^)(BopplProduct *, NSHTTPURLResponse *, NSError *))completion
+{
+	NSURL *serviceURL = [[self class] getProductURLWithVenueID:venueID andProductID:productID];
+	[self callBopplServiceAtURL:serviceURL completion:^(NSArray *JSONCollection, NSHTTPURLResponse *response, NSError *error) {
+		if (JSONCollection.count > 1) {
+			NSLog(@"Returned more than 1 %@ with a call to %s.", [BopplProduct class], __PRETTY_FUNCTION__);
+		} else if (JSONCollection.count == 0) {
 			completion(nil, response, error);
 		} else {
-			completion((NSArray *)JSONCollection, response, error);
+			completion([BopplProduct productWithDictionary:JSONCollection[0]], response, error);
 		}
+	}];
+}
+
+- (void)getProductCategoriesForVenueID:(NSInteger)venueID completion:(void (^)(NSArray *, NSHTTPURLResponse *, NSError *))completion
+{
+	NSURL *serviceURL = [[self class] getProductCategoriesURLWithVenueID:venueID];
+	[self callBopplServiceAtURL:serviceURL completion:^(NSArray *JSONCollection, NSHTTPURLResponse *response, NSError *error) {
+		NSArray *convertedArray = [[self class] arrayByConvertingItemsOfArray:JSONCollection toClass:[BopplProductCategory class]];
+		completion(convertedArray, response, error);
+	}];
+}
+
+- (void)getProductGroupsForVenueID:(NSInteger)venueID completion:(void (^)(NSArray *, NSHTTPURLResponse *, NSError *))completion
+{
+	NSURL *serviceURL = [[self class] getProductGroupsURLWithVenueID:venueID];
+	[self callBopplServiceAtURL:serviceURL completion:^(NSArray *JSONCollection, NSHTTPURLResponse *response, NSError *error) {
+		NSArray *convertedArray = [[self class] arrayByConvertingItemsOfArray:JSONCollection toClass:[BopplProductGroup class]];
+		completion(convertedArray, response, error);
+	}];
+}
+
+- (void)getProductsForVenueID:(NSInteger)venueID completion:(void (^)(NSArray *, NSHTTPURLResponse *, NSError *))completion
+{
+	NSURL *serviceURL = [[self class] getProductsURLWithVenueID:venueID];
+	[self callBopplServiceAtURL:serviceURL completion:^(NSArray *JSONCollection, NSHTTPURLResponse *response, NSError *error) {
+		NSArray *convertedArray = [[self class] arrayByConvertingItemsOfArray:JSONCollection toClass:[BopplProduct class]];
+		completion(convertedArray, response, error);
+	}];
+}
+
+- (void)getProductsForVenueID:(NSInteger)venueID withCategoryID:(NSInteger)categoryID completion:(void (^)(NSArray *, NSHTTPURLResponse *, NSError *))completion
+{
+	NSURL *serviceURL = [[self class] getProductsByCategoryURLWithVenueID:venueID andCategoryID:categoryID];
+	[self callBopplServiceAtURL:serviceURL completion:^(NSArray *JSONCollection, NSHTTPURLResponse *response, NSError *error) {
+		NSArray *convertedArray = [[self class] arrayByConvertingItemsOfArray:JSONCollection toClass:[BopplProduct class]];
+		completion(convertedArray, response, error);
+	}];
+}
+
+- (void)getProductsForVenueID:(NSInteger)venueID withGroupID:(NSInteger)groupID completion:(void (^)(NSArray *, NSHTTPURLResponse *, NSError *))completion
+{
+	NSURL *serviceURL = [[self class] getProductsByGroupURLWithVenueID:venueID andGroupID:groupID];
+	[self callBopplServiceAtURL:serviceURL completion:^(NSArray *JSONCollection, NSHTTPURLResponse *response, NSError *error) {
+		NSArray *convertedArray = [[self class] arrayByConvertingItemsOfArray:JSONCollection toClass:[BopplProduct class]];
+		completion(convertedArray, response, error);
 	}];
 }
 
@@ -151,7 +221,7 @@ static NSUInteger defaultVenueID = 4;
 		return;
 	}
 	
-	if (![self.account isEqualToAccount:[BopplAccount accountWithUsername:@"defrenz@gmail.com" andPassword:@"password123"]]) {
+	if (![self.account isEqualToAccount:[BasicHTTPAuthAccount accountWithUsername:@"defrenz@gmail.com" andPassword:@"password123"]]) {
 		NSLog(@"Cannot use API on Fake Server with an account different from defrenz@gmail.com:password123");
 		completion(nil, [[NSHTTPURLResponse alloc] initWithURL:serviceURL statusCode:401 HTTPVersion:@"HTTP/1.1" headerFields:nil], nil);
 		return;

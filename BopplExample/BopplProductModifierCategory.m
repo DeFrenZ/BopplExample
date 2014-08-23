@@ -7,6 +7,7 @@
 //
 
 #import "BopplProductModifierCategory.h"
+#import "BopplProductModifier.h"
 #import "init_macros.h"
 
 @implementation BopplProductModifierCategory

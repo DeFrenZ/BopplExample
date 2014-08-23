@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "BopplProductGroup.h"
+@class BopplProductGroup;
 
 @interface BopplProductCategory : NSObject
 

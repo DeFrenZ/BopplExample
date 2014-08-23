@@ -80,7 +80,7 @@
 {
 #warning TODO: add UIActivityIndicatorView
 #warning IMPROVE: avoid code repetition with MainViewController's -loginOrAskForCredentials
-	self.server.account = [BopplAccount accountWithUsername:self.usernameTextField.text andPassword:self.passwordTextField.text];
+	self.server.account = [BasicHTTPAuthAccount accountWithUsername:self.usernameTextField.text andPassword:self.passwordTextField.text];
 	[self.server authenticateAccountWithCompletion:^(BOOL authenticated, NSHTTPURLResponse *response, NSError *error) {
 		dispatch_async(dispatch_get_main_queue(), ^{
 #warning TODO: has to treat NSURLErrorDomain 1012 as invalid credentials

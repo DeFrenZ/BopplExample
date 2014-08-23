@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface BopplAccount : NSObject
+@interface BasicHTTPAuthAccount : NSObject
 
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *password;
@@ -20,7 +20,7 @@
 
 - (NSString *)encodedAuthorizationString;
 
-- (BOOL)isEqualToAccount:(BopplAccount *)account;
+- (BOOL)isEqualToAccount:(BasicHTTPAuthAccount *)account;
 
 #warning TODO: add KeyChain support
 
