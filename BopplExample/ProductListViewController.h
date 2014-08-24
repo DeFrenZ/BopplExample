@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BopplServer.h"
 
-@interface ProductListViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface ProductListViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
+@property (strong, nonatomic) BopplServer *server;
+@property (strong, nonatomic) WebImageDownloader *downloader;
 @property (strong, nonatomic) NSArray *productList;
-@property (strong, nonatomic) NSArray *productGroupList;
-@property (strong, nonatomic) NSArray *productCategoryList;
 
 @end

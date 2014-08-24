@@ -16,6 +16,8 @@
 		033AFC1819A818D100212011 /* BopplProductGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 033AFC1719A818D100212011 /* BopplProductGroup.m */; };
 		033AFC1C19A8AB0300212011 /* WebImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 033AFC1B19A8AB0300212011 /* WebImageDownloader.m */; };
 		033AFC1E19A8AB1F00212011 /* WebImageDownloaderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 033AFC1D19A8AB1F00212011 /* WebImageDownloaderTest.m */; };
+		033AFC2519A9611700212011 /* BopplProductViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 033AFC2419A9611700212011 /* BopplProductViewCell.m */; };
+		03EB808419A977F70054B9EA /* BopplProductCategoryHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB808319A977F70054B9EA /* BopplProductCategoryHeaderView.m */; };
 		03FBA2DE19A4F8100014DE22 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FBA2DD19A4F8100014DE22 /* Foundation.framework */; };
 		03FBA2E019A4F8100014DE22 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FBA2DF19A4F8100014DE22 /* CoreGraphics.framework */; };
 		03FBA2E219A4F8100014DE22 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FBA2E119A4F8100014DE22 /* UIKit.framework */; };
@@ -65,6 +67,10 @@
 		033AFC1B19A8AB0300212011 /* WebImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebImageDownloader.m; sourceTree = "<group>"; };
 		033AFC1D19A8AB1F00212011 /* WebImageDownloaderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebImageDownloaderTest.m; sourceTree = "<group>"; };
 		033AFC1F19A8C6C700212011 /* BopplJSONObjects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BopplJSONObjects.h; sourceTree = "<group>"; };
+		033AFC2319A9611700212011 /* BopplProductViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BopplProductViewCell.h; sourceTree = "<group>"; };
+		033AFC2419A9611700212011 /* BopplProductViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BopplProductViewCell.m; sourceTree = "<group>"; };
+		03EB808219A977F70054B9EA /* BopplProductCategoryHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BopplProductCategoryHeaderView.h; sourceTree = "<group>"; };
+		03EB808319A977F70054B9EA /* BopplProductCategoryHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BopplProductCategoryHeaderView.m; sourceTree = "<group>"; };
 		03FBA2DA19A4F80F0014DE22 /* BopplExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BopplExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03FBA2DD19A4F8100014DE22 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		03FBA2DF19A4F8100014DE22 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -237,6 +243,10 @@
 				0302D22B19A6452E006BA95C /* LoginViewController.m */,
 				033AFC0719A675DB00212011 /* ProductListViewController.h */,
 				033AFC0819A675DC00212011 /* ProductListViewController.m */,
+				033AFC2319A9611700212011 /* BopplProductViewCell.h */,
+				033AFC2419A9611700212011 /* BopplProductViewCell.m */,
+				03EB808219A977F70054B9EA /* BopplProductCategoryHeaderView.h */,
+				03EB808319A977F70054B9EA /* BopplProductCategoryHeaderView.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -354,9 +364,11 @@
 				033AFC1C19A8AB0300212011 /* WebImageDownloader.m in Sources */,
 				033AFC0919A675DC00212011 /* ProductListViewController.m in Sources */,
 				03FBA2F419A4F8110014DE22 /* MainViewController.m in Sources */,
+				03EB808419A977F70054B9EA /* BopplProductCategoryHeaderView.m in Sources */,
 				033AFC0F19A8187800212011 /* BopplProductModifierCategory.m in Sources */,
 				0302D22C19A6452E006BA95C /* LoginViewController.m in Sources */,
 				033AFC1219A818B300212011 /* BopplProduct.m in Sources */,
+				033AFC2519A9611700212011 /* BopplProductViewCell.m in Sources */,
 				03FBA2EE19A4F8110014DE22 /* AppDelegate.m in Sources */,
 				03FBA2EA19A4F8110014DE22 /* main.m in Sources */,
 				033AFC1819A818D100212011 /* BopplProductGroup.m in Sources */,

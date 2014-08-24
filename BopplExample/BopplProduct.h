@@ -45,4 +45,7 @@
 + (NSDictionary *)filterProducts:(NSArray *)products byCategories:(NSArray *)categories;
 + (NSDictionary *)filterProducts:(NSArray *)products byGroups:(NSArray *)groups withCategories:(NSArray *)categories;
 
+#warning TODO: supply dictionary and JSON conversion methods
+#warning TODO: add tests
+
 @end

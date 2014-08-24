@@ -93,9 +93,9 @@
 		for (BopplProduct *currentProduct in products) {
 			currentProduct.productCategory = indexedCategories[@(currentProduct.productCategoryIdentifier)];
 		}
+	} else {
+		NSLog(@"Trying to link arrays in %s but at least one is nil.", __PRETTY_FUNCTION__);
 	}
-	
-	NSLog(@"Trying to link arrays in %s but at least one is nil.", __PRETTY_FUNCTION__);
 }
 
 + (void)linkProducts:(NSArray *)products toGroups:(NSArray *)groups withCategories:(NSArray *)categories
@@ -103,9 +103,9 @@
 	if (products != nil && groups != nil && categories != nil) {
 		[BopplProductCategory linkCategories:categories toGroups:groups];
 		[[self class] linkProducts:products toCategories:categories];
+	} else {
+		NSLog(@"Trying to link arrays in %s but at least one is nil.", __PRETTY_FUNCTION__);
 	}
-	
-	NSLog(@"Trying to link arrays in %s but at least one is nil.", __PRETTY_FUNCTION__);
 }
 
 + (NSDictionary *)filterProducts:(NSArray *)products byCategories:(NSArray *)categories
@@ -114,7 +114,7 @@
 		NSMutableDictionary *tempDictionary = [NSMutableDictionary dictionaryWithCapacity:categories.count];
 		NSArray *productsWithinCurrentCategory;
 		for (BopplProductCategory *currentCategory in categories) {
-			productsWithinCurrentCategory = [products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productCategoryIdentifier == %d", currentCategory.identifier]];
+			productsWithinCurrentCategory = [products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productCategoryIdentifier == %@", @(currentCategory.identifier)]];
 			tempDictionary[@(currentCategory.identifier)] = productsWithinCurrentCategory;
 		}
 		return [NSDictionary dictionaryWithDictionary:tempDictionary];
@@ -132,7 +132,7 @@
 		NSMutableDictionary *tempDictionary = [NSMutableDictionary dictionaryWithCapacity:groups.count];
 		NSArray *productsWithinCurrentGroup;
 		for (BopplProductGroup *currentGroup in groups) {
-			productsWithinCurrentGroup = [products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productCategoryIdentifier.productGroupIdentifier == %d", currentGroup.identifier]];
+			productsWithinCurrentGroup = [products filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"productCategory.productGroupIdentifier == %@", @(currentGroup.identifier)]];
 			tempDictionary[@(currentGroup.identifier)] = productsWithinCurrentGroup;
 		}
 		return [NSDictionary dictionaryWithDictionary:tempDictionary];

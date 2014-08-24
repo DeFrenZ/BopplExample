@@ -16,6 +16,7 @@
 @interface MainViewController ()
 
 @property (strong, nonatomic) BopplServer *server;
+@property (strong, nonatomic) WebImageDownloader *downloader;
 @property (nonatomic) BOOL isAuthenticated;
 @property (strong, nonatomic) NSArray *APICallsNames;
 @property (strong, nonatomic) id<NSObject> lastAPIResult;
@@ -38,6 +39,8 @@
 @implementation MainViewController
 
 static NSString *loginViewControllerSegueIdentifier = @"LoginSegue";
+static NSString *productListViewControllerSegueIdentifier = @"ProductListSegue";
+static NSString *productDetailViewControllerSegueIdentifier = @"ProductDetailSegue";
 
 #pragma mark UIViewController
 
@@ -46,6 +49,7 @@ static NSString *loginViewControllerSegueIdentifier = @"LoginSegue";
     [super viewDidLoad];
 	
 	self.server = [BopplServer new];
+	self.downloader = [WebImageDownloader new];
 	BasicHTTPAuthAccount *savedAccount;
 #warning TODO: try to load the account from the keychain
 	if (savedAccount != nil) {
@@ -54,6 +58,8 @@ static NSString *loginViewControllerSegueIdentifier = @"LoginSegue";
 	self.isAuthenticated = NO;
 	self.APICallsNames = @[BopplAPICallNameGetProductsForVenue, BopplAPICallNameGetProductsByCategoryForVenue, BopplAPICallNameGetProductsByGroupForVenue];
 	[self.APICallsNamesPickerView selectRow:0 inComponent:0 animated:NO];
+	
+	[self checkCallAPIButtonEnabling];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -71,8 +77,16 @@ static NSString *loginViewControllerSegueIdentifier = @"LoginSegue";
 		LoginViewController *destinationViewController = (LoginViewController *)segue.destinationViewController;
 		destinationViewController.server = self.server;
 		destinationViewController.delegate = self;
+	} else if ([segue.identifier isEqualToString:productListViewControllerSegueIdentifier]) {
+		ProductListViewController *destinationViewController = (ProductListViewController *)segue.destinationViewController;
+		destinationViewController.server = self.server;
+		destinationViewController.downloader = self.downloader;
+		destinationViewController.productList = (NSArray *)self.lastAPIResult;
+	} else if ([segue.identifier isEqualToString:productDetailViewControllerSegueIdentifier]) {
+#warning TODO: single product view
+	} else {
+		NSLog(@"Preparing for Segue with invalid identifier: %@.", segue.identifier);
 	}
-#warning TODO: add segues for product list
 }
 
 #pragma mark UIAlertViewDelegate
@@ -177,10 +191,16 @@ static NSString *loginViewControllerSegueIdentifier = @"LoginSegue";
 			if (error != nil) {
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"API Call Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
+			} else if (result.count == 0) {
+				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Products" message:@"There were no items found with the selected parameters" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alert show];
 			} else {
 				self.lastAPIResult = result;
-				NSLog(@"Received object: %@", self.lastAPIResult);
-#warning TODO: call segue
+				if ([selectedAPICallName isEqualToString:BopplAPICallNameGetProductWithIDForVenue]) {
+					[self performSegueWithIdentifier:productDetailViewControllerSegueIdentifier sender:self];
+				} else {
+					[self performSegueWithIdentifier:productListViewControllerSegueIdentifier sender:self];
+				}
 			}
 		});
 	}];

@@ -85,7 +85,6 @@ static NSString *HTTPHeaderFieldAuthorization = @"Authorization";
 	[request setValue:[NSString stringWithFormat:@"Basic %@", [self.account encodedAuthorizationString]] forHTTPHeaderField:HTTPHeaderFieldAuthorization];
 	
 	[NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-		NSLog(@"Received response from API Call.");
 		if (connectionError != nil) {
 			NSLog(@"Connection Error in service call: %@.", [connectionError localizedDescription]);
 			completion(nil, nil, connectionError);
@@ -154,7 +153,6 @@ static NSUInteger defaultVenueID = 4;
 	} else if ([APICallName isEqualToString:BopplAPICallNameGetProductsByGroupForVenue]) {
 		[self getProductsForVenueID:venueID withGroupID:otherID completion:completion];
 	} else {
-		NSLog(@"Called %s on invalid or single-argument API call %@. Retrying by ignoring the second argument.", __PRETTY_FUNCTION__, APICallName);
 		[self callAPIWithCallName:APICallName withVenueID:venueID completion:completion];
 	}
 }
@@ -285,7 +283,19 @@ static NSUInteger defaultVenueID = 4;
 							 @"active": @YES,
 							 @"product_modifiers": @[]}];
 	}
+#warning TODO: fake return data on all API calls
 	completion(JSONCollection, response, nil);
+}
+
+- (void)authenticateAccountWithCompletion:(void (^)(BOOL, NSHTTPURLResponse *, NSError *))completion
+{
+	if (![self.account isEqualToAccount:[BasicHTTPAuthAccount accountWithUsername:@"defrenz@gmail.com" andPassword:@"password123"]]) {
+		NSLog(@"Cannot use API on Fake Server with an account different from defrenz@gmail.com:password123");
+		completion(NO, nil, nil);
+		return;
+	}
+	
+	completion(YES, nil, nil);
 }
 
 @end

@@ -83,9 +83,9 @@
 		for (BopplProductCategory *currentCategory in categories) {
 			currentCategory.productGroup = indexedGroups[@(currentCategory.productGroupIdentifier)];
 		}
+	} else {
+		NSLog(@"Trying to link arrays in %s but at least one is nil.", __PRETTY_FUNCTION__);
 	}
-	
-	NSLog(@"Trying to link arrays in %s but at least one is nil.", __PRETTY_FUNCTION__);
 }
 
 + (NSDictionary *)filterCategories:(NSArray *)categories byGroup:(NSArray *)groups
