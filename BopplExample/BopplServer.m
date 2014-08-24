@@ -119,8 +119,6 @@ static NSString *HTTPHeaderFieldAuthorization = @"Authorization";
 
 #pragma mark Boppl Service calls
 
-static NSUInteger defaultVenueID = 4;
-
 - (void)callAPIWithCallName:(NSString *)APICallName withVenueID:(NSInteger)venueID completion:(void (^)(NSArray *, NSHTTPURLResponse *, NSError *))completion
 {
 	if ([APICallName isEqualToString:BopplAPICallNameGetModifierCategoriesForVenue]) {
@@ -262,10 +260,12 @@ static NSUInteger defaultVenueID = 4;
 		return;
 	}
 	
-#warning IMPROVE: make check work for any venueID
+	NSArray *URLComponents = [serviceURL.absoluteString componentsSeparatedByString:@"/"];
+	NSUInteger venueIDIndex = 1 + [URLComponents indexOfObject:@"venues"];
+	NSUInteger venueID = [URLComponents[venueIDIndex] integerValue];
 	NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:serviceURL statusCode:200 HTTPVersion:@"HTTP/1.1" headerFields:nil];
 	id JSONCollection;
-	if ([serviceURL isEqual:[[self class] getModifierCategoriesURLWithVenueID:defaultVenueID]]) {
+	if ([serviceURL isEqual:[[self class] getModifierCategoriesURLWithVenueID:venueID]]) {
 		JSONCollection = @[@{@"id": @1,
 							 @"category_desc": @"Sizes",
 							 @"override_price": @YES,

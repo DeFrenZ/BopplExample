@@ -142,6 +142,47 @@
 	return nil;
 }
 
+- (NSDictionary *)dictionaryRepresentation
+{
+	NSMutableDictionary *tempDictionary = [@{} mutableCopy];
+	tempDictionary[@"id"] = @(self.identifier);
+	tempDictionary[@"product_id"] = @(self.productIdentifier);
+	tempDictionary[@"venue_id"] = @(self.venueIdentifier);
+	tempDictionary[@"product_category_id"] = @(self.productCategoryIdentifier);
+	tempDictionary[@"product_name"] = self.name;
+	tempDictionary[@"product_desc"] = (self.productDescription == nil)? @"" : self.productDescription;
+	tempDictionary[@"image_thumb_url"] = (self.thumbnailImageURL == nil)? @"" : [self.thumbnailImageURL absoluteString];
+	tempDictionary[@"price"] = @(self.price);
+	tempDictionary[@"free_product"] = @(self.isFree);
+	tempDictionary[@"tax_amount"] = @(self.taxes);
+	tempDictionary[@"tax_included"] = @(self.areTaxesIncluded);
+	tempDictionary[@"active"] = @(self.isActive);
+	tempDictionary[@"in_stock"] = @(self.isInStock);
+	tempDictionary[@"preparation_time"] = @(self.preparationTime);
+	tempDictionary[@"popularity"] = @(self.popularity);
+	NSMutableArray *tempArray = [@[] mutableCopy];
+	for (BopplProductModifierCategory *modifierCategory in self.modifierCategories) {
+		[tempArray addObject:[modifierCategory dictionaryRepresentation]];
+	}
+	tempDictionary[@"modifier_categories"] = [NSArray arrayWithArray:tempArray];
+	// epos_id
+	
+	return [NSDictionary dictionaryWithDictionary:tempDictionary];
+}
+
+- (NSData *)JSONData
+{
+	NSDictionary *tempDictionary = [self dictionaryRepresentation];
+	NSError *JSONError;
+	NSData *JSONData = [NSJSONSerialization dataWithJSONObject:tempDictionary options:NSJSONWritingPrettyPrinted error:&JSONError];
+	if (JSONData == nil) {
+		NSLog(@"Error in writing a JSON representation of a %@ object (%@). Dictionary was %@.", [self class], [JSONError localizedDescription], tempDictionary);
+		return nil;
+	}
+	
+	return [NSData dataWithData:JSONData];
+}
+
 - (CGFloat)totalPrice
 {
 	if (self.isFree) {

@@ -136,13 +136,59 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <view opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fyt-Wi-bSj">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rWn-WN-Vkp">
+                                        <rect key="frame" x="90" y="214" width="140" height="140"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <subviews>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="2aC-rr-8qw">
+                                                <rect key="frame" x="51" y="52" width="37" height="37"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </activityIndicatorView>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fEV-Xv-3U7">
+                                                <rect key="frame" x="10" y="100" width="120" height="20"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="rac-D6-fti"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="fEV-Xv-3U7" secondAttribute="trailing" constant="10" id="6bF-OU-kDg"/>
+                                            <constraint firstAttribute="bottom" secondItem="fEV-Xv-3U7" secondAttribute="bottom" constant="20" id="PHc-rT-hUs"/>
+                                            <constraint firstAttribute="centerY" secondItem="2aC-rr-8qw" secondAttribute="centerY" constant="-0.5" id="WND-wx-6Ds"/>
+                                            <constraint firstAttribute="centerX" secondItem="fEV-Xv-3U7" secondAttribute="centerX" id="WgS-qn-tOj"/>
+                                            <constraint firstAttribute="centerX" secondItem="2aC-rr-8qw" secondAttribute="centerX" constant="0.5" id="eVc-xd-hpC"/>
+                                            <constraint firstAttribute="width" constant="140" id="m8l-es-4sz"/>
+                                            <constraint firstAttribute="height" constant="140" id="pa1-qG-cjU"/>
+                                            <constraint firstItem="fEV-Xv-3U7" firstAttribute="leading" secondItem="rWn-WN-Vkp" secondAttribute="leading" constant="10" id="qmX-iK-3eJ"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerY" secondItem="rWn-WN-Vkp" secondAttribute="centerY" id="2yY-Az-pWY"/>
+                                    <constraint firstAttribute="centerX" secondItem="rWn-WN-Vkp" secondAttribute="centerX" id="BWh-Id-G8n"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Cyj-hu-pRy" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="1Ou-Bg-HGK"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Cyj-hu-pRy" secondAttribute="bottom" id="Aha-7G-4x3"/>
+                            <constraint firstItem="fyt-Wi-bSj" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="Olt-NY-zh7"/>
+                            <constraint firstAttribute="centerY" secondItem="fyt-Wi-bSj" secondAttribute="centerY" id="W5m-fi-tCf"/>
+                            <constraint firstItem="fyt-Wi-bSj" firstAttribute="height" secondItem="kh9-bI-dsS" secondAttribute="height" id="XnR-U2-gvQ"/>
                             <constraint firstAttribute="centerX" secondItem="Cyj-hu-pRy" secondAttribute="centerX" id="ZG1-45-VLF"/>
+                            <constraint firstAttribute="centerX" secondItem="fyt-Wi-bSj" secondAttribute="centerX" id="upK-5J-aj7"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="tEP-FU-zzB" appends="YES" id="i8r-k7-wN6"/>
@@ -156,6 +202,9 @@
                         <outlet property="categoryIDTextField" destination="tex-kd-zv8" id="BCc-2z-D8I"/>
                         <outlet property="groupIDSelectionView" destination="5uq-d8-Nig" id="C7z-ej-JW4"/>
                         <outlet property="groupIDTextField" destination="T5C-sp-hQR" id="rmf-cv-fxe"/>
+                        <outlet property="loadingContentBackgroundView" destination="rWn-WN-Vkp" id="4dn-hP-upb"/>
+                        <outlet property="loadingMessageLabel" destination="fEV-Xv-3U7" id="awx-yJ-d0d"/>
+                        <outlet property="loadingView" destination="fyt-Wi-bSj" id="iJV-3i-vBX"/>
                         <outlet property="productIDSelectionView" destination="1D7-cj-g6b" id="QYj-iw-f5W"/>
                         <outlet property="productIDTextField" destination="oUQ-jw-k0k" id="9IB-OV-GRq"/>
                         <outlet property="venueIDTextField" destination="WHi-lJ-W03" id="7xy-Jf-ibG"/>
@@ -471,16 +520,77 @@
                                     <action selector="loginButtonPressed:" destination="Vbv-r6-YGI" eventType="touchUpInside" id="5Rm-Is-xAt"/>
                                 </connections>
                             </button>
+                            <view opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wab-6c-rn8">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pjN-BZ-4vy">
+                                        <rect key="frame" x="90" y="214" width="140" height="140"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <subviews>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="lA3-4R-RHK">
+                                                <rect key="frame" x="51" y="52" width="37" height="37"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </activityIndicatorView>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logging in..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nfb-TX-Yd5">
+                                                <rect key="frame" x="10" y="100" width="120" height="20"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="DHV-2C-SiF"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="centerX" secondItem="Nfb-TX-Yd5" secondAttribute="centerX" id="GG4-vG-6Tg"/>
+                                            <constraint firstAttribute="height" constant="140" id="Gd3-GU-nC9"/>
+                                            <constraint firstItem="Nfb-TX-Yd5" firstAttribute="leading" secondItem="pjN-BZ-4vy" secondAttribute="leading" constant="10" id="MkW-x4-xIg"/>
+                                            <constraint firstAttribute="trailing" secondItem="Nfb-TX-Yd5" secondAttribute="trailing" constant="10" id="RKi-pA-NBH"/>
+                                            <constraint firstAttribute="bottom" secondItem="Nfb-TX-Yd5" secondAttribute="bottom" constant="20" id="VKT-Gz-K0w"/>
+                                            <constraint firstAttribute="centerX" secondItem="lA3-4R-RHK" secondAttribute="centerX" constant="0.5" id="j5h-XL-nYM"/>
+                                            <constraint firstAttribute="width" constant="140" id="x5J-nH-FrN"/>
+                                            <constraint firstAttribute="centerY" secondItem="lA3-4R-RHK" secondAttribute="centerY" constant="-0.5" id="zy1-Ol-0TB"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="pjN-BZ-4vy" secondAttribute="centerX" id="7oz-sr-UTz"/>
+                                    <constraint firstAttribute="centerY" secondItem="pjN-BZ-4vy" secondAttribute="centerY" id="uZk-vO-Zrv"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="wab-6c-rn8" firstAttribute="height" secondItem="vNx-AH-0E3" secondAttribute="height" id="VS8-4i-UNp"/>
+                            <constraint firstItem="wab-6c-rn8" firstAttribute="width" secondItem="vNx-AH-0E3" secondAttribute="width" id="ejq-fT-9FG"/>
+                            <constraint firstAttribute="centerY" secondItem="wab-6c-rn8" secondAttribute="centerY" id="mn3-Md-PTM"/>
+                            <constraint firstAttribute="centerX" secondItem="wab-6c-rn8" secondAttribute="centerX" id="wjI-ma-DuO"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="5a4-KE-88k" appends="YES" id="0o5-Zv-3YG"/>
+                        </connections>
                     </view>
                     <connections>
+                        <outlet property="loadingContentBackgroundView" destination="pjN-BZ-4vy" id="wlk-Z6-3HQ"/>
+                        <outlet property="loadingView" destination="wab-6c-rn8" id="C5m-h2-OME"/>
                         <outlet property="loginButton" destination="rcA-ax-KWN" id="67a-gC-xpe"/>
                         <outlet property="passwordTextField" destination="FNr-gm-AVA" id="02a-4Q-xdV"/>
                         <outlet property="usernameTextField" destination="PMD-ra-Lzv" id="1gI-1j-9ij"/>
+                        <outletCollection property="allTextFields" destination="PMD-ra-Lzv" id="QGG-vl-Mzk"/>
+                        <outletCollection property="allTextFields" destination="FNr-gm-AVA" id="nrt-eP-g02"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gD9-Md-o0d" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="5a4-KE-88k">
+                    <connections>
+                        <action selector="handleTap:" destination="Vbv-r6-YGI" id="Vh0-ar-hC4"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="68" y="716"/>
         </scene>

@@ -36,7 +36,7 @@
 
 - (void)downloadImageFromURL:(NSURL *)imageURL completion:(void (^)(UIImage *))completion
 {
-#warning IMPROVE: Could make the download with NSURLConnection to be less computationally expensive
+	// IMPROVE: Could make the download with NSURLConnection to be less computationally expensive
 	if (imageURL == nil) completion(nil);
 	else {
 		UIImage *cachedProfileImage = [self.imageCache objectForKey:imageURL];

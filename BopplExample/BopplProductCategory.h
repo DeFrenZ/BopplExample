@@ -24,6 +24,9 @@
 - (instancetype)initWithJSONData:(NSData *)data;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
+- (NSData *)JSONData;
+- (NSDictionary *)dictionaryRepresentation;
+
 + (NSDictionary *)dictionaryFromProductCategories:(NSArray *)categories;
 + (void)linkCategories:(NSArray *)categories toGroups:(NSArray *)groups;
 + (NSDictionary *)filterCategories:(NSArray *)categories byGroup:(NSArray *)groups;

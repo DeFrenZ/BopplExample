@@ -26,6 +26,9 @@
 - (instancetype)initWithJSONData:(NSData *)data;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
+- (NSData *)JSONData;
+- (NSDictionary *)dictionaryRepresentation;
+
 + (NSDictionary *)dictionaryFromProductModifiers:(NSArray *)modifiers;
 + (void)linkModifiers:(NSArray *)modifiers toProducts:(NSArray *)products;
 

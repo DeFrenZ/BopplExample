@@ -37,6 +37,8 @@
 - (instancetype)initWithJSONData:(NSData *)data;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
+- (NSData *)JSONData;
+- (NSDictionary *)dictionaryRepresentation;
 - (CGFloat)totalPrice;
 
 - (void)downloadThumbnailImageWithDownloader:(WebImageDownloader *)downloader completion:(void (^)())completion;
@@ -47,7 +49,6 @@
 + (NSDictionary *)filterProducts:(NSArray *)products byCategories:(NSArray *)categories;
 + (NSDictionary *)filterProducts:(NSArray *)products byGroups:(NSArray *)groups withCategories:(NSArray *)categories;
 
-#warning TODO: supply dictionary and JSON conversion methods
 #warning TODO: add tests
 
 @end

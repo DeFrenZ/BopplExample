@@ -82,4 +82,32 @@
 	NSLog(@"Trying to link arrays in %s but at least one is nil.", __PRETTY_FUNCTION__);
 }
 
+- (NSDictionary *)dictionaryRepresentation
+{
+	NSMutableDictionary *tempDictionary = [@{} mutableCopy];
+	tempDictionary[@"id"] = @(self.identifier);
+	tempDictionary[@"modifier_id"] = @(self.modifierIdentifier);
+	tempDictionary[@"modifier_desc"] = (self.modifierDescription == nil)? @"" : self.modifierDescription;
+	tempDictionary[@"price"] = @(self.price);
+	tempDictionary[@"popularity"] = @(self.popularity);
+	tempDictionary[@"active"] = @(self.isActive);
+	tempDictionary[@"product_id"] = @(self.productIdentifier);
+	// epos_id
+	
+	return [NSDictionary dictionaryWithDictionary:tempDictionary];
+}
+
+- (NSData *)JSONData
+{
+	NSDictionary *tempDictionary = [self dictionaryRepresentation];
+	NSError *JSONError;
+	NSData *JSONData = [NSJSONSerialization dataWithJSONObject:tempDictionary options:NSJSONWritingPrettyPrinted error:&JSONError];
+	if (JSONData == nil) {
+		NSLog(@"Error in writing a JSON representation of a %@ object (%@). Dictionary was %@.", [self class], [JSONError localizedDescription], tempDictionary);
+		return nil;
+	}
+	
+	return [NSData dataWithData:JSONData];
+}
+
 @end

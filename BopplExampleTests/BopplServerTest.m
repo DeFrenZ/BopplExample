@@ -44,7 +44,7 @@
 		XCTAssertTrue(authenticated, @"Should have authenticated succesfully with a valid account.");
 		dispatch_semaphore_signal(semaphore);
 	}];
-	
+		
 	if (dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, TEST_TIMEOUT_TIME_NS))) {
 		XCTFail(@"Asynchronous test %s did not finish within the timeout of %f seconds.", __PRETTY_FUNCTION__, TEST_TIMEOUT_TIME_S);
 	}

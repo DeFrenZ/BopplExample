@@ -20,6 +20,9 @@
 - (instancetype)initWithJSONData:(NSData *)data;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
+- (NSData *)JSONData;
+- (NSDictionary *)dictionaryRepresentation;
+
 + (NSDictionary *)dictionaryFromProductGroups:(NSArray *)groups;
 
 @end

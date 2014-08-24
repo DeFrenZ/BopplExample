@@ -32,12 +32,18 @@
 @property (strong, nonatomic) IBOutletCollection(UIView) NSArray *otherIDSelectionViews;
 @property (strong, nonatomic) IBOutlet UIPickerView *APICallsNamesPickerView;
 @property (strong, nonatomic) IBOutlet UIButton *callAPIButton;
+@property (strong, nonatomic) IBOutlet UIButton *loginButton;
+@property (strong, nonatomic) IBOutlet UIView *loadingView;
+@property (strong, nonatomic) IBOutlet UIView *loadingContentBackgroundView;
+@property (strong, nonatomic) IBOutlet UILabel *loadingMessageLabel;
 
 @end
 
 @implementation MainViewController
 
 #pragma mark UIViewController
+
+static CGFloat viewCornerRadius = 20.0;
 
 - (void)viewDidLoad
 {
@@ -53,6 +59,7 @@
 	self.isAuthenticated = NO;
 	self.APICallsNames = @[BopplAPICallNameGetProductsForVenue, BopplAPICallNameGetProductsByCategoryForVenue, BopplAPICallNameGetProductsByGroupForVenue, BopplAPICallNameGetProductWithIDForVenue];
 	[self.APICallsNamesPickerView selectRow:0 inComponent:0 animated:NO];
+	self.loadingContentBackgroundView.layer.cornerRadius = viewCornerRadius;
 	
 	[self checkCallAPIButtonEnabling];
 }
@@ -189,8 +196,10 @@ static NSString *productDetailViewControllerSegueIdentifier = @"ProductDetailSeg
 	}
 	
 	NSString *selectedAPICallName = self.APICallsNames[[self.APICallsNamesPickerView selectedRowInComponent:0]];
+	[self showOrHideLoadingView:YES withMessage:@"Fetching results..."];
 	[self.server callAPIWithCallName:selectedAPICallName withVenueID:[self selectedVenueID] otherID:[self selectedOtherID] completion:^(NSArray *result, NSHTTPURLResponse *response, NSError *error) {
 		dispatch_async(dispatch_get_main_queue(), ^{
+			[self showOrHideLoadingView:NO withMessage:nil];
 			if (error != nil) {
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"API Call Error" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
@@ -229,8 +238,10 @@ static NSString *productDetailViewControllerSegueIdentifier = @"ProductDetailSeg
 	if (self.server.account == nil) {
 		[self performSegueWithIdentifier:loginViewControllerSegueIdentifier sender:self];
 	} else {
+		[self showOrHideLoadingView:YES withMessage:@"Logging in..."];
 		[self.server authenticateAccountWithCompletion:^(BOOL authenticated, NSHTTPURLResponse *response, NSError *error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
+				[self showOrHideLoadingView:NO withMessage:nil];
 				if (error != nil) {
 					UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Login Error" message:[error localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
 					[alert show];
@@ -308,6 +319,27 @@ static NSString *productDetailViewControllerSegueIdentifier = @"ProductDetailSeg
 		return [selectedTextField.text integerValue];
 	}
 	return NSNotFound;
+}
+
+#define ALPHA_OPAQUE 1.0
+#define ALPHA_TRANSPARENT 0.0
+
+- (void)showOrHideLoadingView:(BOOL)show withMessage:(NSString *)loadingMessage
+{
+	[UIView animateWithDuration:VIEW_ANIMATION_DURATION animations:^{
+		if (show) {
+			self.loadingView.hidden = NO;
+		}
+		self.loadingView.alpha = (show)? ALPHA_OPAQUE : ALPHA_TRANSPARENT;
+	} completion:^(BOOL finished) {
+		if (!show) {
+			self.loadingView.hidden = YES;
+		}
+	}];
+	
+	if (show) {
+		self.loadingMessageLabel.text = loadingMessage;
+	}
 }
 
 @end

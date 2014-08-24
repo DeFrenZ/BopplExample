@@ -159,7 +159,7 @@
 
 - (NSUInteger)hash
 {
-#warning IMPROVE: can be improved with bit rotation
+	// IMPROVE: can be improved with bit rotation
 	return [self.username hash] ^ [self.password hash];
 }
 

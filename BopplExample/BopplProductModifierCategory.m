@@ -78,4 +78,35 @@
 	return nil;
 }
 
+- (NSDictionary *)dictionaryRepresentation
+{
+	NSMutableDictionary *tempDictionary = [@{} mutableCopy];
+	tempDictionary[@"id"] = @(self.identifier);
+	tempDictionary[@"category_desc"] = (self.categoryDescription == nil)? @"" : self.categoryDescription;
+	tempDictionary[@"override_price"] = @(self.isOverridingPrice);
+	tempDictionary[@"mandatory_select"] = @(self.isMandatorySelection);
+	tempDictionary[@"multi_select"] = @(self.isMultiSelectable);
+	tempDictionary[@"sort_order"] = @(self.sortOrder);
+	NSMutableArray *tempArray = [@[] mutableCopy];
+	for (BopplProductModifier *modifier in self.productModifiers) {
+		[tempArray addObject:[modifier dictionaryRepresentation]];
+	}
+	tempDictionary[@"product_modifiers"] = [NSArray arrayWithArray:tempArray];
+	
+	return [NSDictionary dictionaryWithDictionary:tempDictionary];
+}
+
+- (NSData *)JSONData
+{
+	NSDictionary *tempDictionary = [self dictionaryRepresentation];
+	NSError *JSONError;
+	NSData *JSONData = [NSJSONSerialization dataWithJSONObject:tempDictionary options:NSJSONWritingPrettyPrinted error:&JSONError];
+	if (JSONData == nil) {
+		NSLog(@"Error in writing a JSON representation of a %@ object (%@). Dictionary was %@.", [self class], [JSONError localizedDescription], tempDictionary);
+		return nil;
+	}
+	
+	return [NSData dataWithData:JSONData];
+}
+
 @end
