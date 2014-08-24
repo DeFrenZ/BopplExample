@@ -37,6 +37,8 @@
 - (instancetype)initWithJSONData:(NSData *)data;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
+- (CGFloat)totalPrice;
+
 - (void)downloadThumbnailImageWithDownloader:(WebImageDownloader *)downloader completion:(void (^)())completion;
 
 + (NSDictionary *)dictionaryFromProducts:(NSArray *)products;

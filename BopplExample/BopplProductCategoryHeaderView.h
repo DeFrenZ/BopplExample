@@ -13,8 +13,6 @@
 
 @property (strong, nonatomic) BopplProductCategory *category;
 
-@property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
-
 - (void)configureHeaderWithCategory;
 
 @end

@@ -8,6 +8,12 @@
 
 #import "BopplProductCategoryHeaderView.h"
 
+@interface BopplProductCategoryHeaderView ()
+
+@property (strong, nonatomic) IBOutlet UILabel *descriptionLabel;
+
+@end
+
 @implementation BopplProductCategoryHeaderView
 
 - (void)configureHeaderWithCategory

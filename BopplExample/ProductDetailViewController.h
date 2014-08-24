@@ -1,5 +1,5 @@
 //
-//  BopplProductViewCell.h
+//  ProductDetailViewController.h
 //  BopplExample
 //
 //  Created by Davide De Franceschi on 24/08/14.
@@ -8,13 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "BopplProduct.h"
-#import "WebImageDownloader.h"
 
-@interface BopplProductViewCell : UICollectionViewCell
+@interface ProductDetailViewController : UIViewController
 
-@property (strong, nonatomic) BopplProduct *product;
 @property (strong, nonatomic) WebImageDownloader *downloader;
+@property (strong, nonatomic) BopplProduct *product;
 
-- (void)configureCellWithProduct;
+- (void)configureViewControllerWithProduct;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "ProductListViewController.h"
+#import "ProductDetailViewController.h"
 #import "BopplJSONObjects.h"
 #import "BopplProductViewCell.h"
 #import "BopplProductCategoryHeaderView.h"
@@ -37,7 +38,7 @@
 		[self.server getProductCategoriesForVenueID:self.venueID completion:^(NSArray *productCategories, NSHTTPURLResponse *response, NSError *error) {
 			self.productCategoryList = productCategories;
 			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-				[self linkAndFilterProductsWithCategories];
+				[self linkAndFilterProductsWithCategoriesRemovingEmptyCategories:YES andOrderingBySortOrder:YES];
 				dispatch_semaphore_signal(semaphore);
 			});
 			
@@ -46,16 +47,27 @@
 			self.productGroupList = productGroups;
 			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 				dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-				[self linkAndFilterProductsWithGroups];
+				[self linkAndFilterProductsWithGroupsRemovingEmptyGroups:YES andOrderingBySortOrder:YES];
 				dispatch_async(dispatch_get_main_queue(), ^{
+					[self updateNavigationBarTitle];
 					[self.productsCollectionView reloadData];
 				});
 			});
 		}];
 	}
-#warning TODO: fix layout spacing between collectionview and navigationbar
-#warning TODO: show only categories with at least 1 product
-#warning TODO: sort by specified sorting order
+}
+
+static NSString *productDetailViewControllerSegueIdentifier = @"ProductDetailSegue";
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+	if ([segue.identifier isEqualToString:productDetailViewControllerSegueIdentifier]) {
+		ProductDetailViewController *destinationViewController = (ProductDetailViewController *)segue.destinationViewController;
+		destinationViewController.downloader = self.downloader;
+		destinationViewController.product = (BopplProduct *)sender;
+	} else {
+		NSLog(@"Preparing for Segue with invalid identifier: %@.", segue.identifier);
+	}
 }
 
 #pragma mark UICollectionViewDataSource
@@ -104,11 +116,16 @@ static NSString *headerReuseIdentifier = @"Header";
 
 #pragma mark UICollectionViewDelegate
 
-
-
-#pragma mark UICollectionViewDelegateFlowLayout
-
-
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+	BopplProductCategory *sectionCategory = (BopplProductCategory *)self.productCategoryList[indexPath.section];
+	NSArray *productsInSection = self.productListByCategory[@(sectionCategory.identifier)];
+	BopplProduct *product = productsInSection[indexPath.row];
+	
+	[self performSegueWithIdentifier:productDetailViewControllerSegueIdentifier sender:product];
+	
+	[collectionView deselectItemAtIndexPath:indexPath animated:YES];
+}
 
 #pragma mark ProductListViewController
 
@@ -129,19 +146,64 @@ static NSString *headerReuseIdentifier = @"Header";
 	self.venueID = currentID;
 }
 
-- (void)linkAndFilterProductsWithCategories
+- (void)linkAndFilterProductsWithCategoriesRemovingEmptyCategories:(BOOL)removeEmptyCategories andOrderingBySortOrder:(BOOL)useSortOrder
 {
 	if (self.productCategoryList != nil) {
 		[BopplProduct linkProducts:self.productList toCategories:self.productCategoryList];
 		self.productListByCategory = [BopplProduct filterProducts:self.productList byCategories:self.productCategoryList];
+		
+		if (removeEmptyCategories) {
+			NSMutableIndexSet *emptyCategoriesIndices = [NSMutableIndexSet new];
+			[self.productCategoryList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+				BopplProductCategory *currentCategory = (BopplProductCategory *)obj;
+				NSArray *productsInCategory = self.productListByCategory[@(currentCategory.identifier)];
+				if (productsInCategory.count == 0) {
+					[emptyCategoriesIndices addIndex:idx];
+				}
+			}];
+			NSMutableArray *tempArray = [self.productCategoryList mutableCopy];
+			[tempArray removeObjectsAtIndexes:emptyCategoriesIndices];
+			self.productCategoryList = [NSArray arrayWithArray:tempArray];
+		}
+		
+		if (useSortOrder) {
+			self.productCategoryList = [self.productCategoryList sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"sortOrder" ascending:YES]]];
+		}
 	}
 }
 
-- (void)linkAndFilterProductsWithGroups
+- (void)linkAndFilterProductsWithGroupsRemovingEmptyGroups:(BOOL)removeEmptyGroups andOrderingBySortOrder:(BOOL)useSortOrder
 {
 	if (self.productCategoryList != nil && self.productGroupList != nil) {
 		[BopplProductCategory linkCategories:self.productCategoryList toGroups:self.productGroupList];
 		self.productListByGroup = [BopplProduct filterProducts:self.productList byGroups:self.productGroupList withCategories:self.productCategoryList];
+		
+		if (removeEmptyGroups) {
+			NSMutableIndexSet *emptyCategoriesIndices = [NSMutableIndexSet new];
+			[self.productGroupList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+				BopplProductGroup *currentGroup = (BopplProductGroup *)obj;
+				NSArray *productsInGroup = self.productListByGroup[@(currentGroup.identifier)];
+				if (productsInGroup.count == 0) {
+					[emptyCategoriesIndices addIndex:idx];
+				}
+			}];
+			NSMutableArray *tempArray = [self.productGroupList mutableCopy];
+			[tempArray removeObjectsAtIndexes:emptyCategoriesIndices];
+			self.productGroupList = [NSArray arrayWithArray:tempArray];
+		}
+		
+		if (useSortOrder) {
+			self.productGroupList = [self.productGroupList sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"sortOrder" ascending:YES]]];
+		}
+	}
+}
+
+- (void)updateNavigationBarTitle
+{
+	if (self.productCategoryList != nil && self.productCategoryList.count == 1) {
+		self.navigationItem.title = ((BopplProductCategory *)self.productCategoryList.firstObject).categoryDescription;
+	} else if (self.productGroupList != nil && self.productGroupList.count == 1) {
+		self.navigationItem.title = ((BopplProductGroup *)self.productGroupList.firstObject).groupDescription;
 	}
 }
 

@@ -8,9 +8,9 @@
 
 #import "MainViewController.h"
 #import "ProductListViewController.h"
+#import "ProductDetailViewController.h"
 #import "BopplServer.h"
 
-#define VIEW_ANIMATION_DURATION 0.4
 #pragma mark -
 
 @interface MainViewController ()
@@ -19,7 +19,6 @@
 @property (strong, nonatomic) WebImageDownloader *downloader;
 @property (nonatomic) BOOL isAuthenticated;
 @property (strong, nonatomic) NSArray *APICallsNames;
-@property (strong, nonatomic) id<NSObject> lastAPIResult;
 
 @property (strong, nonatomic) IBOutlet UITextField *venueIDTextField;
 @property (strong, nonatomic) IBOutlet UITextField *productIDTextField;
@@ -38,10 +37,6 @@
 
 @implementation MainViewController
 
-static NSString *loginViewControllerSegueIdentifier = @"LoginSegue";
-static NSString *productListViewControllerSegueIdentifier = @"ProductListSegue";
-static NSString *productDetailViewControllerSegueIdentifier = @"ProductDetailSegue";
-
 #pragma mark UIViewController
 
 - (void)viewDidLoad
@@ -56,7 +51,7 @@ static NSString *productDetailViewControllerSegueIdentifier = @"ProductDetailSeg
 		self.server.account = savedAccount;
 	}
 	self.isAuthenticated = NO;
-	self.APICallsNames = @[BopplAPICallNameGetProductsForVenue, BopplAPICallNameGetProductsByCategoryForVenue, BopplAPICallNameGetProductsByGroupForVenue];
+	self.APICallsNames = @[BopplAPICallNameGetProductsForVenue, BopplAPICallNameGetProductsByCategoryForVenue, BopplAPICallNameGetProductsByGroupForVenue, BopplAPICallNameGetProductWithIDForVenue];
 	[self.APICallsNamesPickerView selectRow:0 inComponent:0 animated:NO];
 	
 	[self checkCallAPIButtonEnabling];
@@ -71,6 +66,10 @@ static NSString *productDetailViewControllerSegueIdentifier = @"ProductDetailSeg
 	}
 }
 
+static NSString *loginViewControllerSegueIdentifier = @"LoginSegue";
+static NSString *productListViewControllerSegueIdentifier = @"ProductListSegue";
+static NSString *productDetailViewControllerSegueIdentifier = @"ProductDetailSegue";
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 	if ([segue.identifier isEqualToString:loginViewControllerSegueIdentifier]) {
@@ -81,9 +80,11 @@ static NSString *productDetailViewControllerSegueIdentifier = @"ProductDetailSeg
 		ProductListViewController *destinationViewController = (ProductListViewController *)segue.destinationViewController;
 		destinationViewController.server = self.server;
 		destinationViewController.downloader = self.downloader;
-		destinationViewController.productList = (NSArray *)self.lastAPIResult;
+		destinationViewController.productList = (NSArray *)sender;
 	} else if ([segue.identifier isEqualToString:productDetailViewControllerSegueIdentifier]) {
-#warning TODO: single product view
+		ProductDetailViewController *destinationViewController = (ProductDetailViewController *)segue.destinationViewController;
+		destinationViewController.downloader = self.downloader;
+		destinationViewController.product = (BopplProduct *)sender;
 	} else {
 		NSLog(@"Preparing for Segue with invalid identifier: %@.", segue.identifier);
 	}
@@ -132,6 +133,8 @@ static NSString *productDetailViewControllerSegueIdentifier = @"ProductDetailSeg
 {
 	return self.APICallsNames[row];
 }
+
+#define VIEW_ANIMATION_DURATION 0.4
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
@@ -195,11 +198,10 @@ static NSString *productDetailViewControllerSegueIdentifier = @"ProductDetailSeg
 				UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Products" message:@"There were no items found with the selected parameters" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 				[alert show];
 			} else {
-				self.lastAPIResult = result;
 				if ([selectedAPICallName isEqualToString:BopplAPICallNameGetProductWithIDForVenue]) {
-					[self performSegueWithIdentifier:productDetailViewControllerSegueIdentifier sender:self];
+					[self performSegueWithIdentifier:productDetailViewControllerSegueIdentifier sender:result[0]];
 				} else {
-					[self performSegueWithIdentifier:productListViewControllerSegueIdentifier sender:self];
+					[self performSegueWithIdentifier:productListViewControllerSegueIdentifier sender:result];
 				}
 			}
 		});

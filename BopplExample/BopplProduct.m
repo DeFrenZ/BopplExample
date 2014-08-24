@@ -142,6 +142,19 @@
 	return nil;
 }
 
+- (CGFloat)totalPrice
+{
+	if (self.isFree) {
+		return 0;
+	}
+	
+	CGFloat currentPrice = self.price;
+	if (!self.areTaxesIncluded) {
+		currentPrice += self.taxes;
+	}
+	return currentPrice;
+}
+
 - (void)downloadThumbnailImageWithDownloader:(WebImageDownloader *)downloader completion:(void (^)())completion
 {
 	if (downloader == nil) {

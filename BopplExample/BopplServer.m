@@ -146,7 +146,7 @@ static NSUInteger defaultVenueID = 4;
 {
 	if ([APICallName isEqualToString:BopplAPICallNameGetProductWithIDForVenue]) {
 		[self getProductForVenueID:venueID withProductID:otherID completion:^(BopplProduct *product, NSHTTPURLResponse *response, NSError *error) {
-			completion(@[product], response, error);
+			completion((product == nil)? nil : @[product], response, error);
 		}];
 	} else if ([APICallName isEqualToString:BopplAPICallNameGetProductsByCategoryForVenue]) {
 		[self getProductsForVenueID:venueID withCategoryID:otherID completion:completion];
